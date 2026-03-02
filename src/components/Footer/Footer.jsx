@@ -2,7 +2,7 @@ import {
   FaFacebookF,
   FaInstagram,
   FaWhatsapp,
-  FaYoutube,
+  FaTiktok,
   FaTwitter,
   FaPhone,
   FaEnvelope,
@@ -37,11 +37,11 @@ const CONTACT_ITEMS = [
 ];
 
 const SOCIALS = [
-  { icon: <FaFacebookF size={14} />, href: "https://facebook.com",  label: "Facebook" },
-  { icon: <FaInstagram size={14} />, href: "https://instagram.com", label: "Instagram" },
-  { icon: <FaWhatsapp  size={14} />, href: "https://wa.me/254713788322", label: "WhatsApp" },
-  { icon: <FaYoutube   size={14} />, href: "https://youtube.com",   label: "YouTube" },
-  { icon: <FaTwitter   size={14} />, href: "https://twitter.com",   label: "Twitter / X" },
+  { icon: <FaFacebookF size={14} />, href: "https://www.facebook.com/Njoho001",                                    label: "Facebook",    active: true },
+  { icon: <FaInstagram size={14} />, href: "https://www.instagram.com/peterndarugomawe?igsh=NjZ0YnN6b2NocTc=",    label: "Instagram",   active: true },
+  { icon: <FaWhatsapp  size={14} />, href: "https://wa.me/254713788322",                                         label: "WhatsApp",    active: true },
+  { icon: <FaTiktok    size={14} />, href: "https://www.tiktok.com/@buildersforum1?_r=1&_t=ZS-94Lg9bMZkQS",    label: "TikTok",      active: true },
+  { icon: <FaTwitter   size={14} />, href: null,                                                                    label: "Twitter / X", active: false },
 ];
 
 // Logo mark
@@ -80,18 +80,29 @@ export default function Footer({ scrollTo }) {
 
             {/* Social icons */}
             <div className="footer__socials">
-              {SOCIALS.map(({ icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={label}
-                  className="footer__social-icon"
-                >
-                  {icon}
-                </a>
-              ))}
+              {SOCIALS.map(({ icon, href, label, active }) =>
+                active ? (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={label}
+                    className="footer__social-icon"
+                  >
+                    {icon}
+                  </a>
+                ) : (
+                  <span
+                    key={label}
+                    aria-label={label}
+                    className="footer__social-icon footer__social-icon--disabled"
+                    title="Coming soon"
+                  >
+                    {icon}
+                  </span>
+                )
+              )}
             </div>
           </div>
 
