@@ -1,0 +1,128 @@
+/* ═══ TESTIMONIALS ═══ */
+.testimonials {
+  padding: var(--section-pad) var(--page-pad);
+  background: var(--ink);
+}
+
+.testimonials__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonials__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.testimonials__heading {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4.5vw, 58px);
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+}
+
+.testimonials__heading em {
+  color: var(--gold);
+  font-style: italic;
+}
+
+.testimonials__sub {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.35);
+  max-width: 260px;
+  line-height: 1.7;
+}
+
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+/* ── Card ── */
+.tcard {
+  background: var(--ink2);
+  padding: clamp(24px, 5%, 44px) clamp(20px, 4%, 40px);
+  border-bottom: 3px solid transparent;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.tcard:hover {
+  background: #252525;
+  border-bottom-color: var(--gold);
+}
+
+.tcard__quote-mark {
+  font-family: var(--font-display);
+  font-size: 52px;
+  color: var(--gold);
+  opacity: 0.3;
+  line-height: 0.8;
+  margin-bottom: 18px;
+}
+
+.tcard__text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(14px, 1.8vw, 17px);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.75;
+  margin-bottom: 28px;
+}
+
+.tcard__footer {
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.tcard__avatar {
+  width: 44px;
+  height: 44px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.tcard__name {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.tcard__role {
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: var(--gold);
+  margin-top: 2px;
+}
+
+.tcard__project {
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: 2px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .testimonials__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,166 @@
+/* ═══ ABOUT ═══ */
+.about {
+  background: var(--sand);
+  overflow: hidden;
+}
+
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 90vh;
+}
+
+/* Left image panel */
+.about__image-wrap {
+  position: relative;
+  overflow: hidden;
+  min-height: 480px;
+}
+
+.about__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 8s ease;
+}
+
+.about__image--zoomed {
+  transform: scale(1.04);
+}
+
+/* Floating badge */
+.about__badge {
+  position: absolute;
+  bottom: 48px;
+  right: -24px;
+  background: var(--gold);
+  padding: 28px 32px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+  min-width: 180px;
+}
+
+.about__badge-val {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 56px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.about__badge-label {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* Right content panel */
+.about__content {
+  padding: clamp(48px, 8%, 100px) clamp(24px, 7%, 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about__heading {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 700;
+  line-height: 1.08;
+  color: var(--ink);
+  transition: opacity 0.8s 0.2s, transform 0.8s 0.2s;
+}
+
+.about__heading em {
+  color: var(--gold);
+  font-style: italic;
+}
+
+.about__body {
+  font-family: var(--font-body);
+  font-size: clamp(13px, 1.5vw, 15px);
+  font-weight: 400;
+  color: var(--stone);
+  line-height: 1.85;
+  margin-top: 24px;
+}
+
+.about__body strong {
+  color: var(--ink);
+}
+
+.about__body-2 {
+  font-family: var(--font-body);
+  font-size: clamp(12px, 1.3vw, 14px);
+  color: var(--mid);
+  line-height: 1.85;
+  margin-top: 14px;
+}
+
+/* Differentiator grid */
+.about__diff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.about__diff-card {
+  padding: 16px 18px;
+  background: var(--sand2);
+  border-left: 3px solid var(--gold);
+}
+
+.about__diff-title {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.about__diff-sub {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--mid);
+  margin-top: 3px;
+}
+
+.about__cta {
+  margin-top: 32px;
+}
+
+/* Fade/slide animation helpers (applied via inline style) */
+.about__animate {
+  transition: opacity 0.8s, transform 0.8s;
+}
+.about__animate--hidden {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.about__animate--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .about__image-wrap {
+    min-height: 360px;
+  }
+  .about__badge {
+    right: 24px;
+    bottom: 24px;
+  }
+  .about__diff-grid {
+    grid-template-columns: 1fr;
+  }
+}

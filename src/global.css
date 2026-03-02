@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;1,9..144,300;1,9..144,700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --ink: #1a1a1a;
+  --ink2: #2d2d2d;
+  --gold: #c4991a;
+  --gold2: #e8b820;
+  --sand: #f7f4ef;
+  --sand2: #ede9e1;
+  --stone: #4a4540;
+  --mid: #7a7570;
+  --border: #ddd8d0;
+  --white: #ffffff;
+  --green: #25d366;
+
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Syne', sans-serif;
+
+  --section-pad: clamp(64px, 10vw, 120px);
+  --page-pad: clamp(20px, 6%, 80px);
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--sand);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* Grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+::selection {
+  background: var(--gold);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+}
+
+/* ── Shared utility classes ── */
+.eye {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.bar {
+  width: 36px;
+  height: 2px;
+  background: var(--gold);
+  margin: 16px 0 28px;
+}
+
+.btn-ink {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 15px 38px;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s;
+}
+.btn-ink:hover {
+  background: var(--ink2);
+  transform: translateY(-2px);
+}
+
+.btn-gold {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  padding: 15px 38px;
+  cursor: pointer;
+  transition: filter 0.25s, transform 0.2s;
+}
+.btn-gold:hover {
+  filter: brightness(1.12);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  padding: 14px 38px;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+.btn-ghost:hover {
+  border-color: #fff;
+}
+
+.btn-wa {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  padding: 13px 24px;
+  cursor: pointer;
+  transition: filter 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-wa:hover {
+  filter: brightness(1.1);
+}
+
+/* ── Animations ── */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(44px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── WhatsApp FAB ── */
+.wa-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 56px;
+  height: 56px;
+  background: var(--green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 998;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.wa-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 30px rgba(37, 211, 102, 0.65);
+}
+
+/* ── Mobile sticky CTA bar ── */
+.mob-cta {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mob-cta {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 997;
+    height: 56px;
+  }
+  .mob-cta a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+  }
+  .mob-cta .mob-call {
+    background: var(--ink);
+  }
+  .mob-cta .mob-wa {
+    background: var(--green);
+  }
+  .wa-fab {
+    bottom: 72px !important;
+  }
+}
