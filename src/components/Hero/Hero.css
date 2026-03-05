@@ -186,6 +186,9 @@
   position: relative; z-index: 5;
   display: flex; flex-direction: column; justify-content: center;
   padding: 0 var(--page-pad);
+  /* FIX: prevent stage content from exceeding viewport width */
+  max-width: 100%;
+  box-sizing: border-box;
   overflow: hidden;
 }
 
@@ -280,7 +283,11 @@
 
 /* ── CTAs ── */
 .hero__actions {
-  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  /* FIX: removed flex-wrap — wrapping caused layout shift / horizontal shake */
+  flex-wrap: nowrap;
   opacity: 0; transform: translateY(16px);
   transition: opacity 0.8s ease 0.98s, transform 0.8s ease 0.98s;
 }
@@ -288,7 +295,10 @@
 
 .hero__btn-primary {
   display: inline-flex; align-items: center; gap: 12px;
-  padding: 15px 36px;
+  /* FIX: use min-width instead of fixed padding so button stays contained */
+  padding: 15px 28px;
+  white-space: nowrap;
+  flex-shrink: 0;
   background: var(--gold);
   font-family: var(--font-body); font-size: 10.5px; font-weight: 700;
   letter-spacing: 2.5px; text-transform: uppercase; color: var(--ink);
@@ -310,7 +320,9 @@
 
 .hero__btn-secondary {
   display: inline-flex; align-items: center; gap: 10px;
-  padding: 14px 30px;
+  padding: 14px 24px;
+  white-space: nowrap;
+  flex-shrink: 0;
   font-family: var(--font-body); font-size: 10.5px; font-weight: 700;
   letter-spacing: 2.5px; text-transform: uppercase;
   color: rgba(255,255,255,0.65);
@@ -372,6 +384,7 @@
 /* ══ RESPONSIVE ═══════════════════════════ */
 @media (max-width: 768px) {
   .hero__nav-tags, .hero__vrule, .hero__scrollcue { display: none; }
+
   .hero__descriptor { flex-direction: column; gap: 14px; }
   .hero__desc-loc {
     border-left: none; padding-left: 0;
@@ -379,15 +392,50 @@
     padding-top: 14px;
     flex-direction: row; gap: 20px; align-items: center;
   }
-  .hero__actions { flex-direction: column; }
-  .hero__btn-primary, .hero__btn-secondary { width: 100%; justify-content: center; }
-  .hero__footer { padding-bottom: 56px; }
-  .hero__stat { padding: 12px var(--page-pad); }
-  .hero__stat-val { font-size: clamp(22px, 7vw, 36px); }
-  .hero__stat-label { font-size: 7px; }
+
+  /* FIX: stack + fully constrain buttons inside viewport */
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .hero__btn-primary,
+  .hero__btn-secondary {
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* FIX: tighten stat padding so all 4 fit without overflow */
+  .hero__footer {
+    padding-bottom: 56px;
+    overflow: hidden;
+  }
+  .hero__stat {
+    padding: 12px 6px;
+    flex: 1;
+    min-width: 0;
+  }
+  .hero__stat-val {
+    font-size: clamp(16px, 5vw, 26px);
+    letter-spacing: -0.5px;
+  }
+  .hero__stat-label {
+    font-size: 6px;
+    letter-spacing: 1px;
+  }
+
   .hero__hed { letter-spacing: -1px; }
 }
+
 @media (max-width: 480px) {
   .hero__desc-loc-city { font-size: 14px; }
-  .hero__w { font-size: clamp(58px, 18vw, 200px); }
+  .hero__w { font-size: clamp(52px, 16vw, 180px); }
+  .hero__stage {
+    padding-left: clamp(14px, 4%, 28px);
+    padding-right: clamp(14px, 4%, 28px);
+  }
 }
