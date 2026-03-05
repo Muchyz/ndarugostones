@@ -104,7 +104,6 @@ function SectionBlock({ sectionName, products, globalHov, setHov }) {
                 <div className="svc-card__overlay"/>
                 {s.badge&&<span className="svc-card__badge">{s.badge}</span>}
                 <div className="svc-card__caption">
-                    {s.desc&&<span className="svc-card__desc">{s.desc}</span>}
                   <span className="svc-card__cat">{s.cat}</span>
                   <span className="svc-card__title">{s.title}</span>
                 </div>

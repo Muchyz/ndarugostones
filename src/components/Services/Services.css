@@ -478,4 +478,4 @@
 .services__loading { display:flex;align-items:center;justify-content:center;gap:14px;padding:80px;color:rgba(255,255,255,0.35);font-size:13px; }
 .services__empty { text-align:center;padding:80px;color:rgba(255,255,255,0.25);font-size:14px; }
 .svc-card__desc{display:block;font-size:11px;color:rgba(255,255,255,0.45);line-height:1.5;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.svc-card__desc{display:block;font-size:11px;color:rgba(255,255,255,0.5);line-height:1.55;margin-top:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.svc-card__desc{font-size:11px;color:rgba(255,255,255,0.7);line-height:1.6;padding:10px 12px 4px;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;border-top:1px solid rgba(255,255,255,0.06)}
