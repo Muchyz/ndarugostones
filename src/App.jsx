@@ -1,5 +1,5 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./global.css";
-
 import Navbar       from "./components/Navbar/Navbar";
 import Hero         from "./components/Hero/Hero";
 import About        from "./components/About/About";
@@ -11,18 +11,17 @@ import Gallery      from "./components/Gallery/Gallery";
 import Cta          from "./components/Cta/Cta";
 import Contact      from "./components/Contact/Contact";
 import Footer       from "./components/Footer/Footer";
+import Admin        from "./pages/Admin";
 import { wa }       from "./data/constants";
 import { FaWhatsapp } from "react-icons/fa";
 
-// Shared smooth-scroll helper
 const scrollTo = (id) =>
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
-export default function App() {
+function Home() {
   return (
     <>
       <Navbar scrollTo={scrollTo} />
-
       <main>
         <Hero         scrollTo={scrollTo} />
         <About        scrollTo={scrollTo} />
@@ -34,10 +33,7 @@ export default function App() {
         <Cta          scrollTo={scrollTo} />
         <Contact />
       </main>
-
       <Footer scrollTo={scrollTo} />
-
-      {/* ── WhatsApp floating button ── */}
       <a
         className="wa-fab"
         href={wa("Hi, I'd like a quote for building materials.")}
@@ -47,8 +43,6 @@ export default function App() {
       >
         <FaWhatsapp size={26} color="#fff" />
       </a>
-
-      {/* ── Mobile sticky CTA bar ── */}
       <div className="mob-cta">
         <a href="tel:+254713788322" className="mob-call" aria-label="Call us">
           <span>📞</span> CALL
@@ -64,5 +58,16 @@ export default function App() {
         </a>
       </div>
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/"      element={<Home />}  />
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
