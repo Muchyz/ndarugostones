@@ -8,7 +8,7 @@ const apiFetch = async (url, options = {}) => {
   return res.json();
 };
 
-const SECTIONS = ["Stones & Sand", "Building Materials", "Excavation Services", "Other Services"];
+const SECTIONS = ["Stones", "Sand", "Building Materials", "Excavation Services", "Other Services"];
 const EMPTY_FORM = { section:"Building Materials", cat:"", title:"", desc:"", badge:"", phone:"+254712345678", wa:"", img:null, cityPrices:{} };
 
 const PlusIcon  = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>;
