@@ -8,13 +8,7 @@ const apiFetch = async (url, options = {}) => {
   return res.json();
 };
 
-const CITIES = [
-  { label: "Nairobi", key: "nairobi" },
-  { label: "Thika",   key: "thika"   },
-  { label: "Mombasa", key: "mombasa" },
-  { label: "Meru",    key: "meru"    },
-];
-const EMPTY_FORM = { cat:"", title:"", desc:"", badge:"", phone:"+254712345678", wa:"", img:null, cityPrices:{nairobi:"",thika:"",mombasa:"",meru:""} };
+const EMPTY_FORM = { cat:"", title:"", desc:"", badge:"", phone:"+254712345678", wa:"", img:null, cityPrices:{} };
 
 const PlusIcon  = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>;
 const EditIcon  = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>;
@@ -25,8 +19,74 @@ const UploadIcon= () => <svg width="28" height="28" viewBox="0 0 24 24" fill="no
 const GripIcon  = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" opacity="0.4"><circle cx="8" cy="6" r="1.5"/><circle cx="16" cy="6" r="1.5"/><circle cx="8" cy="12" r="1.5"/><circle cx="16" cy="12" r="1.5"/><circle cx="8" cy="18" r="1.5"/><circle cx="16" cy="18" r="1.5"/></svg>;
 const ImageIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>;
 
+function CityPriceEditor({ cityPrices, onChange }) {
+  const entries = Object.entries(cityPrices || {});
+  const [newCity, setNewCity]   = useState("");
+  const [newPrice, setNewPrice] = useState("");
+
+  const addCity = () => {
+    const key = newCity.trim();
+    if (!key) return;
+    onChange({ ...cityPrices, [key]: newPrice.trim() });
+    setNewCity(""); setNewPrice("");
+  };
+
+  const removeCity = (key) => {
+    const updated = { ...cityPrices };
+    delete updated[key];
+    onChange(updated);
+  };
+
+  const updatePrice = (key, val) => onChange({ ...cityPrices, [key]: val });
+
+  return (
+    <div className="city-editor">
+      {entries.length > 0 && (
+        <div className="city-editor__list">
+          {entries.map(([city, price]) => (
+            <div className="city-editor__row" key={city}>
+              <span className="city-editor__name">{city}</span>
+              <input
+                className="city-editor__price"
+                value={price}
+                placeholder="KSh —"
+                onChange={e => updatePrice(city, e.target.value)}
+              />
+              <button className="city-editor__remove" onClick={() => removeCity(city)} title="Remove">
+                <CloseIcon />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+      <div className="city-editor__add">
+        <input
+          className="pf__input"
+          placeholder="City name e.g. Nakuru"
+          value={newCity}
+          onChange={e => setNewCity(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && addCity()}
+        />
+        <input
+          className="pf__input"
+          placeholder="Price e.g. KSh 750"
+          value={newPrice}
+          onChange={e => setNewPrice(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && addCity()}
+        />
+        <button className="city-editor__add-btn" onClick={addCity}>
+          <PlusIcon /> Add
+        </button>
+      </div>
+      {entries.length === 0 && (
+        <p className="city-editor__hint">No locations added yet. Add a city and price above.</p>
+      )}
+    </div>
+  );
+}
+
 function ProductForm({ initial, onSave, onCancel, isNew }) {
-  const [form, setForm]     = useState(() => initial ? { ...initial, img: null } : { ...EMPTY_FORM, cityPrices: { ...EMPTY_FORM.cityPrices } });
+  const [form, setForm]     = useState(() => initial ? { ...initial, img: null } : { ...EMPTY_FORM, cityPrices: {} });
   const [preview, setPreview]   = useState(initial?.img || null);
   const [saving, setSaving]     = useState(false);
   const [errors, setErrors]     = useState({});
@@ -35,7 +95,6 @@ function ProductForm({ initial, onSave, onCancel, isNew }) {
   const fileRef = useRef();
 
   const set = (key, val) => { setForm(f => ({ ...f, [key]: val })); if (errors[key]) setErrors(e => ({ ...e, [key]: null })); };
-  const setPrice = (city, val) => setForm(f => ({ ...f, cityPrices: { ...f.cityPrices, [city]: val } }));
 
   const processFile = (file) => {
     if (!file || !file.type.startsWith("image/")) return;
@@ -50,7 +109,6 @@ function ProductForm({ initial, onSave, onCancel, isNew }) {
         canvas.getContext("2d").drawImage(img,0,0,width,height);
         const b64 = canvas.toDataURL("image/jpeg", 0.82);
         set("img", b64); setPreview(b64); setComp(false);
-        if (errors.img) setErrors(e => ({ ...e, img: null }));
       };
       img.src = ev.target.result;
     };
@@ -76,6 +134,7 @@ function ProductForm({ initial, onSave, onCancel, isNew }) {
     <div className="pf">
       <div className="pf__head"><span className="pf__label">{isNew ? "Add New Product" : "Edit Product"}</span><button className="pf__close" onClick={onCancel}><CloseIcon /></button></div>
       <div className="pf__body">
+
         <div className="pf__field pf__field--full">
           <label className="pf__lbl">Product Photo <span className="pf__req">*</span></label>
           {!preview ? (
@@ -119,15 +178,8 @@ function ProductForm({ initial, onSave, onCancel, isNew }) {
         </div>
 
         <div className="pf__field pf__field--full">
-          <label className="pf__lbl">Price by City</label>
-          <div className="pf__city-grid">
-            {CITIES.map(c=>(
-              <div className="pf__city-cell" key={c.key}>
-                <span className="pf__city-name">{c.label}</span>
-                <input className="pf__city-input" placeholder="KSh —" value={form.cityPrices[c.key]} onChange={e=>setPrice(c.key,e.target.value)} />
-              </div>
-            ))}
-          </div>
+          <label className="pf__lbl">Locations & Prices <span className="pf__opt">(add any city)</span></label>
+          <CityPriceEditor cityPrices={form.cityPrices} onChange={val => set("cityPrices", val)} />
         </div>
 
         <div className="pf__field">
@@ -151,6 +203,7 @@ function ProductForm({ initial, onSave, onCancel, isNew }) {
 
 function ProductRow({ product, index, onEdit, onDelete, onMoveUp, onMoveDown, isFirst, isLast }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const cityEntries = Object.entries(product.cityPrices || {});
   return (
     <div className="pr">
       <div className="pr__drag"><GripIcon/></div>
@@ -162,12 +215,12 @@ function ProductRow({ product, index, onEdit, onDelete, onMoveUp, onMoveDown, is
         <span className="pr__cat">{product.cat}</span>
         <span className="pr__title">{product.title}</span>
         <div className="pr__prices">
-          {CITIES.map(c=>(
-            <span className="pr__price-chip" key={c.key}>
-              <span className="pr__price-city">{c.label}</span>
-              <span className="pr__price-val">{product.cityPrices?.[c.key]||"—"}</span>
+          {cityEntries.length > 0 ? cityEntries.map(([city, price]) => (
+            <span className="pr__price-chip" key={city}>
+              <span className="pr__price-city">{city}</span>
+              <span className="pr__price-val">{price||"—"}</span>
             </span>
-          ))}
+          )) : <span style={{fontSize:10,color:"rgba(255,255,255,0.2)"}}>No locations set</span>}
         </div>
       </div>
       <div className="pr__order-btns">
