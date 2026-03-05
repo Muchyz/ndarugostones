@@ -460,3 +460,16 @@
     font-size: 11px;
   }
 }
+.city-prices-v2{display:flex;flex-direction:column;gap:4px;margin-bottom:20px}
+.city-prices-v2--sm{gap:3px;margin-bottom:0}
+.city-prices-v2__city{background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.07);border-radius:7px;overflow:hidden}
+.city-prices-v2__city-name{display:block;font-family:var(--font-body);font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.4);padding:6px 10px 4px;border-bottom:1px solid rgba(255,255,255,0.05)}
+.city-prices-v2__sizes{display:flex;flex-wrap:wrap;gap:0}
+.city-prices-v2__size-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 10px;flex:1;min-width:80px;border-right:1px solid rgba(255,255,255,0.05)}
+.city-prices-v2__size-row:last-child{border-right:none}
+.city-prices-v2__size{font-family:var(--font-body);font-size:9px;color:rgba(255,255,255,0.4);font-weight:600}
+.city-prices-v2__price{font-family:var(--font-display);font-weight:700;color:var(--gold);font-size:13px}
+.city-prices-v2--sm .city-prices-v2__price{font-size:10px}
+.city-prices-v2--sm .city-prices-v2__city-name{font-size:7px;padding:4px 8px 3px}
+.city-prices-v2--sm .city-prices-v2__size-row{padding:4px 8px}
+.city-prices-v2--sm .city-prices-v2__size{font-size:8px}

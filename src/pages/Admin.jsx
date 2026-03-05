@@ -19,74 +19,119 @@ const UploadIcon= () => <svg width="28" height="28" viewBox="0 0 24 24" fill="no
 const GripIcon  = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" opacity="0.4"><circle cx="8" cy="6" r="1.5"/><circle cx="16" cy="6" r="1.5"/><circle cx="8" cy="12" r="1.5"/><circle cx="16" cy="12" r="1.5"/><circle cx="8" cy="18" r="1.5"/><circle cx="16" cy="18" r="1.5"/></svg>;
 const ImageIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>;
 
+// cityPrices shape: { "Kiambu": { "6*9": "KSh 45", "9*9": "KSh 55" }, "Nairobi": { "6*9": "KSh 40" } }
 function CityPriceEditor({ cityPrices, onChange }) {
-  const entries = Object.entries(cityPrices || {});
-  const [newCity, setNewCity]   = useState("");
-  const [newPrice, setNewPrice] = useState("");
+  const [newCity, setNewCity]     = useState("");
+  const [newSize, setNewSize]     = useState("");
+  const [newPrice, setNewPrice]   = useState("");
+  const [selCity, setSelCity]     = useState(""); // which city to add variant to
+
+  const cities = Object.keys(cityPrices || {});
 
   const addCity = () => {
     const key = newCity.trim();
-    if (!key) return;
-    onChange({ ...cityPrices, [key]: newPrice.trim() });
-    setNewCity(""); setNewPrice("");
+    if (!key || cityPrices[key] !== undefined) return;
+    onChange({ ...cityPrices, [key]: {} });
+    setNewCity("");
+    setSelCity(key);
   };
 
-  const removeCity = (key) => {
+  const removeCity = (city) => {
     const updated = { ...cityPrices };
-    delete updated[key];
+    delete updated[city];
+    onChange(updated);
+    if (selCity === city) setSelCity("");
+  };
+
+  const addVariant = (city) => {
+    const size  = newSize.trim();
+    const price = newPrice.trim();
+    if (!size || !price) return;
+    onChange({
+      ...cityPrices,
+      [city]: { ...(cityPrices[city] || {}), [size]: price }
+    });
+    setNewSize(""); setNewPrice("");
+  };
+
+  const removeVariant = (city, size) => {
+    const updated = { ...cityPrices, [city]: { ...cityPrices[city] } };
+    delete updated[city][size];
     onChange(updated);
   };
 
-  const updatePrice = (key, val) => onChange({ ...cityPrices, [key]: val });
+  const updateVariantPrice = (city, size, val) => {
+    onChange({ ...cityPrices, [city]: { ...cityPrices[city], [size]: val } });
+  };
 
   return (
     <div className="city-editor">
-      {entries.length > 0 && (
-        <div className="city-editor__list">
-          {entries.map(([city, price]) => (
-            <div className="city-editor__row" key={city}>
-              <span className="city-editor__name">{city}</span>
-              <input
-                className="city-editor__price"
-                value={price}
-                placeholder="KSh —"
-                onChange={e => updatePrice(city, e.target.value)}
-              />
-              <button className="city-editor__remove" onClick={() => removeCity(city)} title="Remove">
-                <CloseIcon />
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-      <div className="city-editor__add">
-        <input
-          className="pf__input"
-          placeholder="City name e.g. Nakuru"
-          value={newCity}
-          onChange={e => setNewCity(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && addCity()}
-        />
-        <input
-          className="pf__input"
-          placeholder="Price e.g. KSh 750"
-          value={newPrice}
-          onChange={e => setNewPrice(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && addCity()}
-        />
-        <button className="city-editor__add-btn" onClick={addCity}>
-          <PlusIcon /> Add
-        </button>
+
+      {/* Add new city */}
+      <div className="city-editor__new-city">
+        <input className="pf__input" placeholder="City name e.g. Kiambu" value={newCity} onChange={e=>setNewCity(e.target.value)} onKeyDown={e=>e.key==="Enter"&&addCity()} />
+        <button className="city-editor__add-btn" onClick={addCity}><PlusIcon/> Add City</button>
       </div>
-      {entries.length === 0 && (
-        <p className="city-editor__hint">No locations added yet. Add a city and price above.</p>
+
+      {cities.length === 0 && (
+        <p className="city-editor__hint">No locations yet. Add a city above, then add sizes and prices.</p>
       )}
+
+      {/* City blocks */}
+      {cities.map(city => {
+        const variants = Object.entries(cityPrices[city] || {});
+        const isOpen = selCity === city;
+        return (
+          <div className="city-block" key={city}>
+            <div className="city-block__hdr">
+              <span className="city-block__name">{city}</span>
+              <div className="city-block__hdr-actions">
+                <button className="city-block__toggle" onClick={()=>setSelCity(isOpen?"":city)}>
+                  {isOpen ? "▲ Close" : "▼ Add size"}
+                </button>
+                <button className="city-editor__remove" onClick={()=>removeCity(city)} title="Remove city"><CloseIcon/></button>
+              </div>
+            </div>
+
+            {/* Existing variants */}
+            {variants.length > 0 && (
+              <div className="city-block__variants">
+                {variants.map(([size, price]) => (
+                  <div className="city-block__variant-row" key={size}>
+                    <span className="city-block__size">{size}</span>
+                    <input
+                      className="city-editor__price"
+                      value={price}
+                      placeholder="KSh —"
+                      onChange={e=>updateVariantPrice(city, size, e.target.value)}
+                    />
+                    <button className="city-editor__remove" onClick={()=>removeVariant(city,size)} title="Remove"><CloseIcon/></button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Add variant form */}
+            {isOpen && (
+              <div className="city-block__add-variant">
+                <input className="pf__input" placeholder='Size e.g. 6*9 or "50kg"' value={newSize} onChange={e=>setNewSize(e.target.value)} onKeyDown={e=>e.key==="Enter"&&addVariant(city)} />
+                <input className="pf__input" placeholder="Price e.g. KSh 45" value={newPrice} onChange={e=>setNewPrice(e.target.value)} onKeyDown={e=>e.key==="Enter"&&addVariant(city)} />
+                <button className="city-editor__add-btn" onClick={()=>addVariant(city)}><PlusIcon/> Add</button>
+              </div>
+            )}
+
+            {variants.length === 0 && !isOpen && (
+              <p className="city-editor__hint" style={{margin:"6px 0 2px"}}>No sizes yet — click "Add size"</p>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 function ProductForm({ initial, onSave, onCancel, isNew }) {
-  const [form, setForm]     = useState(() => initial ? { ...initial, img: null } : { ...EMPTY_FORM, cityPrices: {} });
+  const [form, setForm]         = useState(() => initial ? { ...initial, img: null } : { ...EMPTY_FORM, cityPrices: {} });
   const [preview, setPreview]   = useState(initial?.img || null);
   const [saving, setSaving]     = useState(false);
   const [errors, setErrors]     = useState({});
@@ -157,7 +202,7 @@ function ProductForm({ initial, onSave, onCancel, isNew }) {
 
         <div className="pf__field">
           <label className="pf__lbl">Category <span className="pf__req">*</span></label>
-          <input className={`pf__input${errors.cat?" pf__input--err":""}`} placeholder="e.g. Cement" value={form.cat} onChange={e=>set("cat",e.target.value)} />
+          <input className={`pf__input${errors.cat?" pf__input--err":""}`} placeholder="e.g. Tiles" value={form.cat} onChange={e=>set("cat",e.target.value)} />
           {errors.cat && <span className="pf__err">{errors.cat}</span>}
         </div>
         <div className="pf__field">
@@ -167,7 +212,7 @@ function ProductForm({ initial, onSave, onCancel, isNew }) {
 
         <div className="pf__field pf__field--full">
           <label className="pf__lbl">Product Title <span className="pf__req">*</span></label>
-          <input className={`pf__input${errors.title?" pf__input--err":""}`} placeholder="e.g. Bamburi Cement 50 KG Bags" value={form.title} onChange={e=>set("title",e.target.value)} />
+          <input className={`pf__input${errors.title?" pf__input--err":""}`} placeholder="e.g. Porcelain Floor Tiles" value={form.title} onChange={e=>set("title",e.target.value)} />
           {errors.title && <span className="pf__err">{errors.title}</span>}
         </div>
 
@@ -178,8 +223,9 @@ function ProductForm({ initial, onSave, onCancel, isNew }) {
         </div>
 
         <div className="pf__field pf__field--full">
-          <label className="pf__lbl">Locations & Prices <span className="pf__opt">(add any city)</span></label>
-          <CityPriceEditor cityPrices={form.cityPrices} onChange={val => set("cityPrices", val)} />
+          <label className="pf__lbl">Locations, Sizes & Prices</label>
+          <p className="pf__field-hint">Add a city → then add sizes with prices for that city</p>
+          <CityPriceEditor cityPrices={form.cityPrices} onChange={val=>set("cityPrices",val)} />
         </div>
 
         <div className="pf__field">
@@ -215,10 +261,14 @@ function ProductRow({ product, index, onEdit, onDelete, onMoveUp, onMoveDown, is
         <span className="pr__cat">{product.cat}</span>
         <span className="pr__title">{product.title}</span>
         <div className="pr__prices">
-          {cityEntries.length > 0 ? cityEntries.map(([city, price]) => (
+          {cityEntries.length > 0 ? cityEntries.map(([city, sizes]) => (
             <span className="pr__price-chip" key={city}>
               <span className="pr__price-city">{city}</span>
-              <span className="pr__price-val">{price||"—"}</span>
+              <span className="pr__price-val">
+                {typeof sizes === "object"
+                  ? Object.entries(sizes).map(([s,p])=>`${s}: ${p}`).join(" · ")
+                  : sizes}
+              </span>
             </span>
           )) : <span style={{fontSize:10,color:"rgba(255,255,255,0.2)"}}>No locations set</span>}
         </div>

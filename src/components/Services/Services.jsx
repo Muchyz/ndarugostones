@@ -5,29 +5,43 @@ import { useInView } from "../../hooks/useInView";
 const PHONE = "+254712345678";
 
 const DEFAULT_SERVICES = [
-  { id:0, cat:"Cement", title:"Bamburi Cement\n50 KG Bags", desc:"High-strength OPC 42.5N cement. Ideal for foundations, columns and reinforced slabs.", img:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&auto=format&fit=crop&q=80", badge:"Best Seller", wa:"Hi, I'm interested in Bamburi Cement 50kg bags.", phone:PHONE, cityPrices:{Nairobi:"KSh 40",Thika:"KSh 50",Mombasa:"KSh 90",Meru:"KSh 80"} },
-  { id:1, cat:"Timber", title:"Cypress Timber", desc:"Kiln-dried, treated cypress in all standard sizes. Perfect for roof trusses and framing.", img:"https://images.unsplash.com/photo-1541123437800-1bb1317badc2?w=900&auto=format&fit=crop&q=80", badge:null, wa:"Hi, I need Cypress Timber.", phone:PHONE, cityPrices:{Nairobi:"KSh 40",Thika:"KSh 50",Mombasa:"KSh 90",Meru:"KSh 80"} },
-  { id:2, cat:"Steel", title:"Y16 Deformed Bars", desc:"Grade 500N high-tensile steel reinforcement bars, 12m.", img:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&auto=format&fit=crop&q=80", badge:"🔥 Hot", wa:"Hi, I'm interested in Y16 steel bars.", phone:PHONE, cityPrices:{Nairobi:"KSh 40",Thika:"KSh 50",Mombasa:"KSh 90",Meru:"KSh 80"} },
-  { id:3, cat:"Tiles", title:"Porcelain Floor Tiles", desc:"Anti-slip matt finish 60×60. Suitable for both indoor and outdoor floors.", img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&auto=format&fit=crop&q=80", badge:null, wa:"Hi, I need Porcelain Floor Tiles 60x60.", phone:PHONE, cityPrices:{Nairobi:"KSh 40",Thika:"KSh 50",Mombasa:"KSh 90",Meru:"KSh 80"} },
-  { id:4, cat:"Roofing", title:"Mabati Box Profile", desc:"28-gauge galvanised colour-coated iron sheets, 2.4m.", img:"https://images.unsplash.com/photo-1591588582259-e675bd2e6088?w=900&auto=format&fit=crop&q=80", badge:null, wa:"Hi, I'm looking for Mabati Box Profile 28G.", phone:PHONE, cityPrices:{Nairobi:"KSh 40",Thika:"KSh 50",Mombasa:"KSh 90",Meru:"KSh 80"} },
-  { id:5, cat:"Paint", title:"Crown Weathershield", desc:"UV-resistant exterior masonry paint. 10-year guarantee. Available in 20L tins.", img:"https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=900&auto=format&fit=crop&q=80", badge:null, wa:"Hi, I need Crown Weathershield exterior paint.", phone:PHONE, cityPrices:{Nairobi:"KSh 40",Thika:"KSh 50",Mombasa:"KSh 90",Meru:"KSh 80"} },
+  { id:0, cat:"Cement", title:"Bamburi Cement\n50 KG Bags", desc:"High-strength OPC 42.5N cement. Ideal for foundations, columns and reinforced slabs.", img:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&auto=format&fit=crop&q=80", badge:"Best Seller", wa:"Hi, I'm interested in Bamburi Cement 50kg bags.", phone:PHONE, cityPrices:{Nairobi:{"50kg":"KSh 40"},Thika:{"50kg":"KSh 50"},Mombasa:{"50kg":"KSh 90"},Meru:{"50kg":"KSh 80"}} },
+  { id:1, cat:"Timber", title:"Cypress Timber", desc:"Kiln-dried, treated cypress in all standard sizes.", img:"https://images.unsplash.com/photo-1541123437800-1bb1317badc2?w=900&auto=format&fit=crop&q=80", badge:null, wa:"Hi, I need Cypress Timber.", phone:PHONE, cityPrices:{Nairobi:{"2*4":"KSh 40","4*4":"KSh 70"},Thika:{"2*4":"KSh 50","4*4":"KSh 80"}} },
+  { id:2, cat:"Tiles", title:"Porcelain Floor Tiles", desc:"Anti-slip matt finish. Suitable for both indoor and outdoor floors.", img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&auto=format&fit=crop&q=80", badge:null, wa:"Hi, I need Porcelain Floor Tiles.", phone:PHONE, cityPrices:{Kiambu:{"6*9":"KSh 45","9*9":"KSh 55"},Nairobi:{"6*9":"KSh 40","9*9":"KSh 50"}} },
+  { id:3, cat:"Steel", title:"Y16 Deformed Bars", desc:"Grade 500N high-tensile steel reinforcement bars, 12m.", img:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&auto=format&fit=crop&q=80", badge:"🔥 Hot", wa:"Hi, I'm interested in Y16 steel bars.", phone:PHONE, cityPrices:{Nairobi:{"12m":"KSh 40"},Thika:{"12m":"KSh 50"}} },
+  { id:4, cat:"Roofing", title:"Mabati Box Profile", desc:"28-gauge galvanised colour-coated iron sheets.", img:"https://images.unsplash.com/photo-1591588582259-e675bd2e6088?w=900&auto=format&fit=crop&q=80", badge:null, wa:"Hi, I'm looking for Mabati Box Profile 28G.", phone:PHONE, cityPrices:{Nairobi:{"2.4m":"KSh 40"},Thika:{"2.4m":"KSh 50"}} },
+  { id:5, cat:"Paint", title:"Crown Weathershield", desc:"UV-resistant exterior masonry paint. 10-year guarantee.", img:"https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=900&auto=format&fit=crop&q=80", badge:null, wa:"Hi, I need Crown Weathershield exterior paint.", phone:PHONE, cityPrices:{Nairobi:{"20L":"KSh 40"},Thika:{"20L":"KSh 50"}} },
 ];
 
 const WaIcon = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>;
 const PhoneIcon = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>;
 const PinIcon = () => <svg width="9" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>;
 
+// Renders city blocks with size→price rows
 function CityPrices({ cityPrices={}, variant }) {
-  const entries = Object.entries(cityPrices);
-  if (entries.length === 0) return null;
+  const cities = Object.entries(cityPrices);
+  if (cities.length === 0) return null;
+
   return (
-    <div className={`city-prices${variant?` city-prices--${variant}`:""}`} style={{gridTemplateColumns:`repeat(${Math.min(entries.length,4)},1fr)`}}>
-      {entries.map(([city, price]) => (
-        <div className="city-prices__cell" key={city}>
-          <span className="city-prices__city">{city}</span>
-          <span className="city-prices__val">{price||"—"}</span>
-        </div>
-      ))}
+    <div className={`city-prices-v2${variant?` city-prices-v2--${variant}`:""}`}>
+      {cities.map(([city, sizes]) => {
+        const sizeEntries = typeof sizes === "object" && !Array.isArray(sizes)
+          ? Object.entries(sizes)
+          : [["", sizes]]; // backwards compat if string
+        return (
+          <div className="city-prices-v2__city" key={city}>
+            <span className="city-prices-v2__city-name">{city}</span>
+            <div className="city-prices-v2__sizes">
+              {sizeEntries.map(([size, price]) => (
+                <div className="city-prices-v2__size-row" key={size}>
+                  {size && <span className="city-prices-v2__size">{size}</span>}
+                  <span className="city-prices-v2__price">{price||"—"}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -96,7 +110,7 @@ export default function Services({ scrollTo }) {
               <span className="feat__cat">{featured.cat} · Featured</span>
               <h3 className="feat__title">{featured.title}</h3>
               <p className="feat__desc">{featured.desc}</p>
-              {Object.keys(featured.cityPrices||{}).length>0 && <>
+              {Object.keys(featured.cityPrices||{}).length>0&&<>
                 <p className="prices-label"><PinIcon/> Price by Location</p>
                 <CityPrices cityPrices={featured.cityPrices} variant="lg"/>
               </>}
@@ -118,7 +132,7 @@ export default function Services({ scrollTo }) {
                     <span className="svc-card__title">{s.title}</span>
                   </div>
                 </div>
-                {Object.keys(s.cityPrices||{}).length>0 && (
+                {Object.keys(s.cityPrices||{}).length>0&&(
                   <div className="svc-card__prices-wrap">
                     <p className="prices-label prices-label--sm"><PinIcon/> Price by City</p>
                     <CityPrices cityPrices={s.cityPrices} variant="sm"/>
