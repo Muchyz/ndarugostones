@@ -108,6 +108,7 @@ function SectionBlock({ sectionName, products, globalHov, setHov }) {
                   <span className="svc-card__title">{s.title}</span>
                 </div>
               </div>
+              {s.desc&&<p className="svc-card__desc">{s.desc}</p>}
               {Object.keys(s.cityPrices||{}).length>0&&(
                 <div className="svc-card__prices-wrap">
                   <p className="prices-label prices-label--sm"><PinIcon/> Price by City</p>
