@@ -473,3 +473,7 @@
 .city-prices-v2--sm .city-prices-v2__city-name{font-size:7px;padding:4px 8px 3px}
 .city-prices-v2--sm .city-prices-v2__size-row{padding:4px 8px}
 .city-prices-v2--sm .city-prices-v2__size{font-size:8px}
+.section-block { padding: var(--section-pad) 0 0; }
+.section-divider { height:1px; background:linear-gradient(to right,transparent,rgba(196,153,26,0.2),transparent); margin:60px 0 0; }
+.services__loading { display:flex;align-items:center;justify-content:center;gap:14px;padding:80px;color:rgba(255,255,255,0.35);font-size:13px; }
+.services__empty { text-align:center;padding:80px;color:rgba(255,255,255,0.25);font-size:14px; }

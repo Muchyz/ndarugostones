@@ -13,16 +13,17 @@ const pool = new Pool({
 });
 
 const toProduct = (row) => ({
-  id:          row.id,
-  cat:         row.cat,
-  title:       row.title,
-  desc:        row.description,
-  badge:       row.badge   || null,
-  phone:       row.phone,
-  wa:          row.wa_message,
-  img:         row.image   || null,
-  cityPrices:  row.city_prices || {},
-  sort_order:  row.sort_order,
+  id:         row.id,
+  cat:        row.cat,
+  title:      row.title,
+  desc:       row.description,
+  badge:      row.badge   || null,
+  phone:      row.phone,
+  wa:         row.wa_message,
+  img:        row.image   || null,
+  cityPrices: row.city_prices || {},
+  sort_order: row.sort_order,
+  section:    row.section || "Building Materials",
 });
 
 app.get("/api/products", async (req, res) => {
@@ -33,13 +34,14 @@ app.get("/api/products", async (req, res) => {
 });
 
 app.post("/api/products", async (req, res) => {
-  const { cat, title, desc, badge, phone, wa, img, cityPrices, sort_order } = req.body;
+  const { cat, title, desc, badge, phone, wa, img, cityPrices, sort_order, section } = req.body;
   if (!cat || !title || !desc) return res.status(400).json({ error: "cat, title and desc are required" });
   try {
     const { rows } = await pool.query(
-      `INSERT INTO products (cat, title, description, badge, phone, wa_message, image, city_prices, sort_order)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`,
-      [cat, title, desc, badge||null, phone||"+254712345678", wa||null, img||null, JSON.stringify(cityPrices||{}), sort_order??0]
+      `INSERT INTO products (cat, title, description, badge, phone, wa_message, image, city_prices, sort_order, section)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *`,
+      [cat, title, desc, badge||null, phone||"+254712345678", wa||null, img||null,
+       JSON.stringify(cityPrices||{}), sort_order??0, section||"Building Materials"]
     );
     res.status(201).json(toProduct(rows[0]));
   } catch (err) { console.error(err); res.status(500).json({ error: "Failed to create product" }); }
@@ -58,12 +60,13 @@ app.put("/api/products/reorder", async (req, res) => {
 
 app.put("/api/products/:id", async (req, res) => {
   const { id } = req.params;
-  const { cat, title, desc, badge, phone, wa, img, cityPrices, sort_order } = req.body;
+  const { cat, title, desc, badge, phone, wa, img, cityPrices, sort_order, section } = req.body;
   try {
     const { rows } = await pool.query(
       `UPDATE products SET cat=$1, title=$2, description=$3, badge=$4, phone=$5, wa_message=$6,
-       image=COALESCE($7,image), city_prices=$8, sort_order=$9 WHERE id=$10 RETURNING *`,
-      [cat, title, desc, badge||null, phone||"+254712345678", wa||null, img||null, JSON.stringify(cityPrices||{}), sort_order??0, id]
+       image=COALESCE($7,image), city_prices=$8, sort_order=$9, section=$10 WHERE id=$11 RETURNING *`,
+      [cat, title, desc, badge||null, phone||"+254712345678", wa||null, img||null,
+       JSON.stringify(cityPrices||{}), sort_order??0, section||"Building Materials", id]
     );
     if (!rows.length) return res.status(404).json({ error: "Product not found" });
     res.json(toProduct(rows[0]));
