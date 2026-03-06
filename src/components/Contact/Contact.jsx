@@ -37,11 +37,31 @@ export default function Contact() {
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    setSent(true);
-    setForm({ name: "", phone: "", email: "", material: "", county: "", msg: "" });
-    setTimeout(() => setSent(false), 6000);
+    setSubmitting(true);
+    try {
+      const res = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          email: form.email,
+          material: form.material,
+          county: form.county,
+          message: form.msg,
+        }),
+      });
+      if (!res.ok) throw new Error('Failed');
+      setSent(true);
+      setForm({ name: '', phone: '', email: '', material: '', county: '', msg: '' });
+      setTimeout(() => setSent(false), 6000);
+    } catch (err) {
+      alert('Something went wrong. Please try WhatsApp instead.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const anim = (delay = 0) => ({
