@@ -2,7 +2,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "routes": [
-    { "src": "/api/ping", "dest": "/api/ping.cjs" },
+    { "src": "/api/ping", "dest": "/api/ping/index.js" },
     { "src": "/api/(.*)", "dest": "/api/index.js" },
     { "src": "^/assets/(.*)", "dest": "/assets/$1" },
     { "src": "^/(.*)\\.(.+)$", "dest": "/$1.$2" },
