@@ -162,7 +162,7 @@ export default function Hero({ scrollTo }) {
             Bulk supply with guaranteed delivery to every county — on schedule, every time.
           </p>
           <div className="hero__desc-loc">
-            <span className="hero__desc-loc-city">Nairobi</span>
+            <span className="hero__desc-loc-city">Juja</span>
             <span className="hero__desc-loc-country">Kenya</span>
             <span className="hero__desc-loc-tag">Countrywide</span>
           </div>
