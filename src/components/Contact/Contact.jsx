@@ -33,6 +33,7 @@ export default function Contact() {
   const [ref, visible] = useInView();
   const [form, setForm] = useState({ name: "", phone: "", email: "", material: "", county: "", msg: "" });
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
