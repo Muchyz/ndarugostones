@@ -1,5 +1,4 @@
 const express    = require("express");
-const serverless = require("serverless-http");
 const { Pool }   = require("pg");
 const cors       = require("cors");
 const cloudinary = require("cloudinary").v2;
@@ -33,10 +32,8 @@ const toProduct = (row) => ({
   section:    row.section || "Building Materials",
 });
 
-// Upload base64 image to Cloudinary
 const uploadImage = async (base64) => {
   if (!base64) return null;
-  // If already a URL (Cloudinary), return as is
   if (base64.startsWith("http")) return base64;
   const result = await cloudinary.uploader.upload(base64, {
     folder: "ndarugo",
@@ -49,7 +46,7 @@ app.get("/api/products", async (req, res) => {
   try {
     const { rows } = await pool.query("SELECT * FROM products ORDER BY sort_order ASC, id ASC");
     res.json(rows.map(toProduct));
-  } catch (err) { res.status(500).json({ error: "Failed to fetch products" }); }
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 app.post("/api/products", async (req, res) => {
@@ -64,7 +61,7 @@ app.post("/api/products", async (req, res) => {
        JSON.stringify(cityPrices||{}), sort_order??0, section||"Building Materials"]
     );
     res.status(201).json(toProduct(rows[0]));
-  } catch (err) { console.error(err); res.status(500).json({ error: "Failed to create product" }); }
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 app.put("/api/products/reorder", async (req, res) => {
@@ -75,7 +72,7 @@ app.put("/api/products/reorder", async (req, res) => {
       pool.query("UPDATE products SET sort_order=$1 WHERE id=$2", [sort_order, id])
     ));
     res.json({ ok: true });
-  } catch (err) { res.status(500).json({ error: "Failed to reorder" }); }
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 app.put("/api/products/:id", async (req, res) => {
@@ -91,14 +88,14 @@ app.put("/api/products/:id", async (req, res) => {
     );
     if (!rows.length) return res.status(404).json({ error: "Product not found" });
     res.json(toProduct(rows[0]));
-  } catch (err) { res.status(500).json({ error: "Failed to update product" }); }
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 app.delete("/api/products/:id", async (req, res) => {
   try {
     await pool.query("DELETE FROM products WHERE id=$1", [req.params.id]);
     res.json({ ok: true });
-  } catch (err) { res.status(500).json({ error: "Failed to delete product" }); }
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 module.exports = app;
