@@ -237,35 +237,55 @@ function ProductRow({ product, index, onEdit, onDelete, onMoveUp, onMoveDown, is
   const cityEntries = Object.entries(product.cityPrices||{});
   return (
     <div className="pr">
-      <div className="pr__drag"><GripIcon/></div>
-      <div className="pr__img-wrap">
-        {product.img?<img src={product.img} alt={product.title} className="pr__img"/>:<div className="pr__img-ph"><ImageIcon/></div>}
-        {product.badge&&<span className="pr__badge">{product.badge}</span>}
-      </div>
-      <div className="pr__info">
-        <span className="pr__section-tag">{product.section}</span>
-        <span className="pr__cat">{product.cat}</span>
-        <span className="pr__title">{product.title}</span>
-        <div className="pr__prices">
-          {cityEntries.length>0?cityEntries.map(([city,sizes])=>(
-            <span className="pr__price-chip" key={city}>
-              <span className="pr__price-city">{city}</span>
-              <span className="pr__price-val">{typeof sizes==="object"?Object.entries(sizes).map(([s,p])=>`${s}:${p}`).join(" · "):sizes}</span>
-            </span>
-          )):<span style={{fontSize:10,color:"rgba(255,255,255,0.2)"}}>No locations</span>}
+      {/* Top: drag + image + info + order buttons */}
+      <div className="pr__main">
+        <div className="pr__drag"><GripIcon/></div>
+        <div className="pr__img-wrap">
+          {product.img ? <img src={product.img} alt={product.title} className="pr__img"/> : <div className="pr__img-ph"><ImageIcon/></div>}
+          {product.badge && <span className="pr__badge">{product.badge}</span>}
+        </div>
+        <div className="pr__info">
+          <div className="pr__meta">
+            <span className="pr__section-tag">{product.section}</span>
+            <span className="pr__cat">{product.cat}</span>
+          </div>
+          <span className="pr__title">{product.title}</span>
+        </div>
+        <div className="pr__order-btns">
+          <button className="pr__order-btn" onClick={onMoveUp} disabled={isFirst}>↑</button>
+          <span className="pr__order-num">{index+1}</span>
+          <button className="pr__order-btn" onClick={onMoveDown} disabled={isLast}>↓</button>
         </div>
       </div>
-      <div className="pr__order-btns">
-        <button className="pr__order-btn" onClick={onMoveUp} disabled={isFirst}>↑</button>
-        <span className="pr__order-num">{index+1}</span>
-        <button className="pr__order-btn" onClick={onMoveDown} disabled={isLast}>↓</button>
-      </div>
+
+      {/* Price chips */}
+      {cityEntries.length > 0 && (
+        <div className="pr__prices">
+          {cityEntries.map(([city, sizes]) => (
+            <span className="pr__price-chip" key={city}>
+              <span className="pr__price-city">{city}</span>
+              <span className="pr__price-sep">·</span>
+              <span className="pr__price-val">
+                {typeof sizes === "object"
+                  ? Object.entries(sizes).map(([s,p]) => `${s}: ${p}`).join("  ·  ")
+                  : sizes}
+              </span>
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Action bar */}
       <div className="pr__actions">
         <button className="pr__btn pr__btn--edit" onClick={onEdit}><EditIcon/> Edit</button>
-        {confirmDelete?(
-          <div className="pr__confirm"><span>Delete?</span><button className="pr__confirm-yes" onClick={onDelete}>Yes</button><button className="pr__confirm-no" onClick={()=>setConfirmDelete(false)}>No</button></div>
-        ):(
-          <button className="pr__btn pr__btn--del" onClick={()=>setConfirmDelete(true)}><TrashIcon/> Delete</button>
+        {confirmDelete ? (
+          <div className="pr__confirm">
+            <span>Delete?</span>
+            <button className="pr__confirm-yes" onClick={onDelete}>Yes, Delete</button>
+            <button className="pr__confirm-no" onClick={() => setConfirmDelete(false)}>Cancel</button>
+          </div>
+        ) : (
+          <button className="pr__btn pr__btn--del" onClick={() => setConfirmDelete(true)}><TrashIcon/> Delete</button>
         )}
       </div>
     </div>
