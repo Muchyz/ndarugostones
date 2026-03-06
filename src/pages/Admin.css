@@ -1,9 +1,9 @@
 /* ═══════════════════════════════════════════
    ADMIN — clean mobile-first stylesheet
 ═══════════════════════════════════════════ */
-*,*::before,*::after{box-sizing:border-box}
-
-.admin{min-height:100vh;background:#0c0c0c;font-family:var(--font-body,'DM Sans',system-ui,sans-serif);color:#fff}
+*,*::before,*::after{box-sizing:border-box;min-width:0}
+html,body{overflow-x:hidden;max-width:100vw}
+.admin{min-height:100vh;background:#0c0c0c;font-family:var(--font-body,'DM Sans',system-ui,sans-serif);color:#fff;overflow-x:hidden;max-width:100vw}
 
 /* HEADER */
 .admin__hdr{display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:56px;background:rgba(10,10,10,0.97);border-bottom:1px solid rgba(255,255,255,0.07);position:sticky;top:0;z-index:50;backdrop-filter:blur(10px)}
@@ -19,11 +19,11 @@
 .admin__preview-btn{background:var(--gold,#c4991a);color:#1a1a1a;font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:7px 12px;border-radius:5px;text-decoration:none;white-space:nowrap}
 
 /* MAIN */
-.admin__main{padding:20px 16px 80px}
+.admin__main{padding:20px 16px 80px;width:100%;overflow-x:hidden}
 
 /* TABS */
-.admin__tabs{display:flex;margin-bottom:22px;border-bottom:1px solid rgba(255,255,255,0.08)}
-.admin__tab{flex:1;background:transparent;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.35);font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:11px 8px;cursor:pointer;transition:all .15s;margin-bottom:-1px;text-align:center}
+.admin__tabs{display:flex;overflow:hidden;margin-bottom:22px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.admin__tab{flex:1;min-width:0;background:transparent;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.35);font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:11px 4px;cursor:pointer;transition:all .15s;margin-bottom:-1px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .admin__tab--active{color:#fff;border-bottom-color:var(--gold,#c4991a)}
 
 /* TITLE BAR */
@@ -51,16 +51,16 @@
 .admin__filter-tab--active .admin__filter-count{background:rgba(196,153,26,.2)}
 
 /* PRODUCT LIST */
-.admin__list{display:flex;flex-direction:column;gap:8px}
+.admin__list{display:flex;flex-direction:column;gap:8px;width:100%}
 
 /* ═══════════════════════════════════════════
    PRODUCT CARD — stacked mobile layout
 ═══════════════════════════════════════════ */
-.pr{display:flex;flex-direction:column;background:#141414;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;transition:border-color .2s,background .2s}
+.pr{display:flex;flex-direction:column;background:#141414;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;transition:border-color .2s,background .2s;width:100%;max-width:100%}
 .pr:hover{border-color:rgba(196,153,26,.2);background:#171717}
 
 /* Row 1: drag + image + info */
-.pr__top{display:flex;align-items:flex-start;gap:12px;padding:12px}
+.pr__top{display:flex;align-items:flex-start;gap:10px;padding:12px;width:100%;overflow:hidden}
 .pr__drag{display:flex;align-items:center;justify-content:center;padding-top:4px;flex-shrink:0;opacity:.3;cursor:grab}
 .pr__img-wrap{position:relative;width:76px;height:76px;border-radius:8px;overflow:hidden;flex-shrink:0;background:#1e1e1e}
 .pr__img{width:100%;height:100%;object-fit:cover;display:block}
@@ -77,12 +77,12 @@
 .pr__order-btn:disabled{opacity:.15;cursor:default}
 .pr__order-num{font-size:10px;font-weight:700;color:rgba(255,255,255,.2);padding:0 4px}
 
-/* Row 2: price chips — wraps freely */
-.pr__prices{display:flex;gap:5px;flex-wrap:wrap;padding:0 12px 10px}
-.pr__price-chip{display:flex;align-items:baseline;gap:4px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.07);border-radius:5px;padding:4px 8px}
-.pr__price-city{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25)}
+/* Row 2: price chips — wraps freely, text wraps inside */
+.pr__prices{display:flex;gap:5px;flex-wrap:wrap;padding:0 12px 10px;width:100%;overflow:hidden}
+.pr__price-chip{display:flex;align-items:baseline;gap:4px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.07);border-radius:5px;padding:4px 8px;max-width:100%;flex-wrap:wrap}
+.pr__price-city{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);white-space:nowrap}
 .pr__price-dot{font-size:8px;color:rgba(255,255,255,.12)}
-.pr__price-val{font-family:var(--font-display,serif);font-size:10px;font-weight:700;color:var(--gold,#c4991a)}
+.pr__price-val{font-family:var(--font-display,serif);font-size:10px;font-weight:700;color:var(--gold,#c4991a);word-break:break-word;overflow-wrap:anywhere}
 
 /* Row 3: actions — full width, equal tap targets */
 .pr__actions{display:flex;gap:8px;padding:10px 12px;border-top:1px solid rgba(255,255,255,.05)}

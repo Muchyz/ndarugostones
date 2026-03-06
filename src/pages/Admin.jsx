@@ -268,20 +268,26 @@ function ProductRow({ product, index, onEdit, onDelete, onMoveUp, onMoveDown, is
         </div>
       </div>
 
-      {/* Row 2: price chips */}
+      {/* Row 2: price chips — one chip per city×size pair */}
       {cityEntries.length > 0 && (
         <div className="pr__prices">
-          {cityEntries.map(([city, sizes]) => (
-            <span className="pr__price-chip" key={city}>
-              <span className="pr__price-city">{city}</span>
-              <span className="pr__price-dot">·</span>
-              <span className="pr__price-val">
-                {typeof sizes === "object"
-                  ? Object.entries(sizes).map(([s,p]) => `${s}: ${p}`).join("  ·  ")
-                  : sizes}
-              </span>
-            </span>
-          ))}
+          {cityEntries.map(([city, sizes]) =>
+            typeof sizes === "object"
+              ? Object.entries(sizes).map(([size, price]) => (
+                  <span className="pr__price-chip" key={city + size}>
+                    <span className="pr__price-city">{city}</span>
+                    <span className="pr__price-dot">·</span>
+                    <span className="pr__price-val">{size}: {price}</span>
+                  </span>
+                ))
+              : (
+                <span className="pr__price-chip" key={city}>
+                  <span className="pr__price-city">{city}</span>
+                  <span className="pr__price-dot">·</span>
+                  <span className="pr__price-val">{sizes}</span>
+                </span>
+              )
+          )}
         </div>
       )}
 
