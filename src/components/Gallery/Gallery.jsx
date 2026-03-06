@@ -7,13 +7,11 @@ const GALLERY = [
     url: "/gallery-1.jpg",
     label: "Site Delivery",
     caption: "Mombasa, Kenya",
-    wide: true,
   },
   {
     url: "/gallery-2.jpg",
     label: "Materials On-Site",
     caption: "Nairobi, Kenya",
-    tall: true,
   },
   {
     url: "/gallery-3.jpg",
@@ -29,7 +27,6 @@ const GALLERY = [
     url: "/gallery-5.jpg",
     label: "Bulk Delivery",
     caption: "Nakuru, Kenya",
-    wide: true,
   },
   {
     url: "/gallery-6.jpg",
@@ -40,7 +37,6 @@ const GALLERY = [
     url: "/gallery-7.jpg",
     label: "Material Quality",
     caption: "Nairobi, Kenya",
-    tall: true,
   },
   {
     url: "/gallery-8.jpg",
@@ -86,17 +82,11 @@ export default function Gallery() {
           {GALLERY.map((img, i) => (
             <div
               key={i}
-              className={[
-                "gcell",
-                img.wide ? "gcell--wide" : "",
-                img.tall ? "gcell--tall" : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
+              className="gcell"
               style={{
                 opacity: visible ? 1 : 0,
-                transform: visible ? "scale(1)" : "scale(0.97)",
-                transition: `opacity 0.7s ${0.05 * i}s, transform 0.7s ${0.05 * i}s`,
+                transform: visible ? "translateY(0)" : "translateY(20px)",
+                transition: `opacity 0.6s ${0.07 * i}s, transform 0.6s ${0.07 * i}s`,
               }}
               onClick={() => setLightbox(img)}
               role="button"

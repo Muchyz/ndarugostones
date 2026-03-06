@@ -245,6 +245,30 @@
   text-align: center;
 }
 
+.contact__map {
+  position: relative;
+}
+
+.contact__map-overlay {
+  display: block;
+  text-align: center;
+  padding: 8px 12px;
+  background: var(--ink);
+  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border: 1px solid rgba(201,168,76,0.2);
+  border-top: none;
+  transition: background 0.2s;
+}
+
+.contact__map-overlay:hover {
+  background: rgba(201,168,76,0.08);
+}
+
 /* ── Responsive ── */
 @media (max-width: 900px) {
   .contact__grid {

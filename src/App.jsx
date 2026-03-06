@@ -28,8 +28,8 @@ function Home() {
         <Services     scrollTo={scrollTo} />
         <Stats />
         <Process />
-        <Testimonials />
         <Gallery />
+         <Testimonials />
         <Cta          scrollTo={scrollTo} />
         <Contact />
       </main>

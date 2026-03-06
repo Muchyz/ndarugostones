@@ -113,6 +113,48 @@ export const TESTIMONIALS = [
     text: "When they say 24 hours, they mean 24 hours. That kind of reliability builds your own reputation as a contractor. I recommend them without hesitation.",
     project: "Road construction — Thika–Garissa",
   },
+  {
+    name: "Samuel Otieno",
+    role: "Quantity Surveyor, BuildRight Kenya",
+    initials: "SO",
+    text: "Material specifications are exactly as quoted — no surprises on site. Their quarry dust and ballast consistently pass our lab tests. That saves us time and money.",
+    project: "Government school construction, Siaya",
+  },
+  {
+    name: "Fatuma Hassan",
+    role: "Project Manager, Coastal Developers",
+    initials: "FH",
+    text: "We needed 40 loads delivered across three Mombasa sites in one week. Favoured K. coordinated everything flawlessly. I was genuinely impressed.",
+    project: "Beach resort foundations, Diani",
+  },
+  {
+    name: "David Njoroge",
+    role: "Structural Engineer, Skyline Engineers",
+    initials: "DN",
+    text: "The machine-cut ndarugo stones have excellent dimensional consistency. Our masons work faster because every stone is uniform. Quality you can build on.",
+    project: "5-storey office block, Westlands",
+  },
+  {
+    name: "Agnes Wambui",
+    role: "Housing Developer, Juja Park Homes",
+    initials: "AW",
+    text: "I've used three different suppliers before Favoured K. None matched their combination of price, quality and delivery speed. They are now our sole supplier.",
+    project: "50-unit housing estate, Juja",
+  },
+  {
+    name: "Brian Odhiambo",
+    role: "Roads Contractor, Rift Roads Ltd",
+    initials: "BO",
+    text: "Hardcore and site fill delivered on schedule to remote Rift Valley sites. Driver communication was excellent throughout. Will continue working with them.",
+    project: "County road upgrade, Nakuru–Eldoret",
+  },
+  {
+    name: "Caroline Muthoni",
+    role: "Architect, CM Studio Nairobi",
+    initials: "CM",
+    text: "As an architect I care deeply about material quality. Favoured K. river sand is consistently clean and well-graded — my contractors never complain about it.",
+    project: "Private residence, Karen, Nairobi",
+  },
 ];
 
 export const wa = (msg) =>

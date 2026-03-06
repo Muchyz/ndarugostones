@@ -13,7 +13,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 56px;
+  margin-bottom: 48px;
   flex-wrap: wrap;
   gap: 20px;
 }
@@ -22,7 +22,7 @@
   font-family: var(--font-display);
   font-size: clamp(28px, 4.5vw, 58px);
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.05;
   color: #fff;
 }
 
@@ -39,64 +39,83 @@
   line-height: 1.7;
 }
 
+/* ── Grid ── */
 .testimonials__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
+  gap: 16px;
+  min-height: 320px;
 }
 
 /* ── Card ── */
 .tcard {
-  background: var(--ink2);
-  padding: clamp(24px, 5%, 44px) clamp(20px, 4%, 40px);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: clamp(20px, 4%, 36px);
   border-bottom: 3px solid transparent;
-  transition: background 0.3s, border-color 0.3s;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 .tcard:hover {
-  background: #252525;
+  background: rgba(255,255,255,0.07);
   border-bottom-color: var(--gold);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(201,168,76,0.1);
+}
+
+.tcard__stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 14px;
+}
+
+.tcard__stars span {
+  font-size: 12px;
+  color: var(--gold, #c9a84c);
+  filter: drop-shadow(0 0 3px rgba(201,168,76,0.5));
 }
 
 .tcard__quote-mark {
   font-family: var(--font-display);
-  font-size: 52px;
+  font-size: 48px;
   color: var(--gold);
-  opacity: 0.3;
+  opacity: 0.25;
   line-height: 0.8;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 
 .tcard__text {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(14px, 1.8vw, 17px);
-  color: rgba(255, 255, 255, 0.85);
+  font-size: clamp(13px, 1.6vw, 16px);
+  color: rgba(255, 255, 255, 0.82);
   line-height: 1.75;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .tcard__footer {
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
   display: flex;
-  gap: 14px;
+  gap: 12px;
   align-items: center;
 }
 
 .tcard__avatar {
-  width: 44px;
-  height: 44px;
-  background: var(--gold);
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--gold), #7a5c1a);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: #fff;
   flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(201,168,76,0.2);
 }
 
 .tcard__name {
@@ -111,18 +130,94 @@
   font-size: 10px;
   color: var(--gold);
   margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .tcard__project {
   font-family: var(--font-body);
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.28);
   margin-top: 2px;
+}
+
+/* ── Pagination ── */
+.testimonials__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.tpag__btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.2s;
+  font-family: var(--font-body);
+  letter-spacing: -1px;
+}
+
+.tpag__btn:hover:not(:disabled) {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #000;
+  transform: scale(1.05);
+}
+
+.tpag__btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.tpag__dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.tpag__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s, transform 0.25s, width 0.25s, border-radius 0.25s;
+}
+
+.tpag__dot--active {
+  background: var(--gold);
+  width: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(201,168,76,0.45);
+}
+
+.tpag__count {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.05em;
+  min-width: 36px;
+  text-align: center;
 }
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
   .testimonials__grid {
     grid-template-columns: 1fr;
+    min-height: unset;
   }
 }

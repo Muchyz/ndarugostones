@@ -38,7 +38,7 @@ export default function Cta({ scrollTo }) {
             <em>Construction Project?</em>
           </h2>
           <p className="cta__sub">
-            From Nairobi to Mombasa. Kisumu to Eldoret. Quality materials
+            From Juja to Mombasa. Kisumu to Eldoret. Quality materials
             delivered to every corner of Kenya.
           </p>
           <div className="cta__buttons">

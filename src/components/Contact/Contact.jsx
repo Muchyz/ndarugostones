@@ -14,7 +14,7 @@ import { wa } from "../../data/constants";
 const INFO_ITEMS = [
   { icon: <FaPhone size={16} />,        label: "Phone & WhatsApp", val: "+254 713 788 322",           href: "tel:+254713788322" },
   { icon: <FaEnvelope size={16} />,     label: "Email",            val: "Desmondchegeh50@gmail.com",  href: "mailto:Desmondchegeh50@gmail.com" },
-  { icon: <FaMapMarkerAlt size={16} />, label: "Head Office",      val: "Nairobi, Kenya",             href: "#" },
+  { icon: <FaMapMarkerAlt size={16} />, label: "Head Office",      val: "Juja, Kiambu County, Kenya", href: "https://www.google.com/maps/search/Juja+Ndarugo+Stones+Kiambu+Kenya" },
   { icon: <FaClock size={16} />,        label: "Business Hours",   val: "Mon–Sat: 6am – 8pm",         href: "#" },
   { icon: <FaTruck size={16} />,        label: "Delivery",         val: "All 47 Counties, Nationwide", href: "#" },
 ];
@@ -93,10 +93,11 @@ export default function Contact() {
               </div>
             </a>
 
+            {/* Map pointing to Juja, Kiambu */}
             <div className="contact__map">
               <iframe
-                title="Nairobi Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255282.35653956246!2d36.68258899999999!3d-1.3028617999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi%2C%20Kenya!5e0!3m2!1sen!2ske!4v1710000000000!5m2!1sen!2ske"
+                title="Juja Ndarugo Location"
+                src="https://maps.google.com/maps?q=-1.1050,37.0100&z=14&output=embed"
                 width="100%"
                 height="170"
                 style={{ border: 0, display: "block" }}
@@ -104,6 +105,14 @@ export default function Contact() {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
+              <a
+                href="https://www.google.com/maps/search/Juja+Ndarugo+Stones+Kiambu+Kenya"
+                target="_blank"
+                rel="noreferrer"
+                className="contact__map-overlay"
+              >
+                📍 Open in Google Maps — Juja Ndarugo Stones
+              </a>
             </div>
           </div>
 

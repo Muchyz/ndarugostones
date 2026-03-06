@@ -1,13 +1,22 @@
+import { useState } from "react";
 import "./Testimonials.css";
 import { TESTIMONIALS } from "../../data/constants";
 import { useInView } from "../../hooks/useInView";
 
+const PER_PAGE = 3;
+const TOTAL_PAGES = Math.ceil(TESTIMONIALS.length / PER_PAGE);
+
 export default function Testimonials() {
   const [ref, visible] = useInView();
+  const [page, setPage] = useState(0);
+
+  const visible_cards = TESTIMONIALS.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
 
   return (
     <section className="testimonials">
       <div ref={ref} className="testimonials__inner">
+
+        {/* Header */}
         <div className="testimonials__header">
           <div>
             <span className="eye" style={{ color: "rgba(196,153,26,0.8)" }}>
@@ -38,19 +47,23 @@ export default function Testimonials() {
           </p>
         </div>
 
+        {/* Cards */}
         <div className="testimonials__grid">
-          {TESTIMONIALS.map((t, i) => (
+          {visible_cards.map((t, i) => (
             <div
-              key={t.name}
+              key={`${page}-${i}`}
               className="tcard"
               style={{
                 opacity: visible ? 1 : 0,
                 transform: visible ? "translateY(0)" : "translateY(28px)",
-                transition: `opacity 0.8s ${0.1 + i * 0.12}s, transform 0.8s ${0.1 + i * 0.12}s`,
+                transition: `opacity 0.6s ${0.08 * i}s, transform 0.6s ${0.08 * i}s`,
               }}
             >
+              <div className="tcard__stars">
+                {[...Array(5)].map((_, s) => <span key={s}>★</span>)}
+              </div>
               <div className="tcard__quote-mark" aria-hidden="true">"</div>
-              <p className="tcard__text">"{t.text}"</p>
+              <p className="tcard__text">{t.text}</p>
               <div className="tcard__footer">
                 <div className="tcard__avatar">{t.initials}</div>
                 <div>
@@ -62,6 +75,49 @@ export default function Testimonials() {
             </div>
           ))}
         </div>
+
+        {/* Pagination */}
+        <div
+          className="testimonials__pagination"
+          style={{
+            opacity: visible ? 1 : 0,
+            transition: "opacity 0.8s 0.5s",
+          }}
+        >
+          <button
+            className="tpag__btn"
+            onClick={() => setPage((p) => Math.max(p - 1, 0))}
+            disabled={page === 0}
+            aria-label="Previous"
+          >
+            ‹‹
+          </button>
+
+          <div className="tpag__dots">
+            {Array.from({ length: TOTAL_PAGES }).map((_, i) => (
+              <button
+                key={i}
+                className={`tpag__dot${i === page ? " tpag__dot--active" : ""}`}
+                onClick={() => setPage(i)}
+                aria-label={`Page ${i + 1}`}
+              />
+            ))}
+          </div>
+
+          <span className="tpag__count">
+            {page + 1} / {TOTAL_PAGES}
+          </span>
+
+          <button
+            className="tpag__btn"
+            onClick={() => setPage((p) => Math.min(p + 1, TOTAL_PAGES - 1))}
+            disabled={page === TOTAL_PAGES - 1}
+            aria-label="Next"
+          >
+            ››
+          </button>
+        </div>
+
       </div>
     </section>
   );
