@@ -22,16 +22,31 @@ export default function About({ scrollTo }) {
       <div ref={ref} className="about__grid">
 
         {/* Left: image */}
-        <div className="about__image-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=90"
-            alt="Machine-cut Ndarugo stones"
-            className={`about__image ${visible ? "about__image--zoomed" : ""}`}
-          />
-          <div className="about__badge">
-            <div className="about__badge-val">15+</div>
-            <div className="about__badge-label">Years of Trust</div>
+        <div className={`about__image-wrap${visible ? " about__image-wrap--in" : ""}`}>
+
+          {/* Corner accents on panel */}
+          <span className="about__corner about__corner--tl" />
+          <span className="about__corner about__corner--br" />
+
+          {/* Framed logo */}
+          <div className="about__frame">
+            <div className="about__frame-shine" />
+            <img
+              src="/Logo5.jpeg"
+              alt="Favoured K. Ndarugo Suppliers"
+              className={`about__image ${visible ? "about__image--zoomed" : ""}`}
+            />
           </div>
+
+          {/* 15+ badge — bottom-left, inside panel */}
+          <div className="about__badge">
+            <div className="about__badge-inner">
+              <div className="about__badge-val">15<span className="about__badge-plus">+</span></div>
+              <div className="about__badge-divider" />
+              <div className="about__badge-label">Years<br />of Trust</div>
+            </div>
+          </div>
+
         </div>
 
         {/* Right: content */}

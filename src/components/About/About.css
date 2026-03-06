@@ -10,56 +10,185 @@
   min-height: 90vh;
 }
 
-/* Left image panel */
+/* ── Left image panel ── */
 .about__image-wrap {
   position: relative;
-  overflow: hidden;
   min-height: 480px;
+  background: var(--sand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 48px 40px 120px 40px; /* bottom padding makes room for badge */
+  box-sizing: border-box;
+}
+
+/* Panel entrance */
+.about__image-wrap--in .about__frame  { opacity: 1; transform: translateY(0) scale(1); }
+.about__image-wrap--in .about__badge  { opacity: 1; transform: translateY(0); }
+
+/* Corner accent lines */
+.about__corner {
+  position: absolute;
+  width: 52px; height: 52px;
+  border-color: var(--gold);
+  border-style: solid;
+  opacity: 0.45;
+  z-index: 1;
+}
+.about__corner--tl { top: 28px; left: 28px; border-width: 2px 0 0 2px; }
+.about__corner--br { bottom: 28px; right: 28px; border-width: 0 2px 2px 0; }
+
+/* ── Logo frame ── */
+.about__frame {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  background: #fff;
+  padding: clamp(20px, 5%, 36px);
+  box-sizing: border-box;
+  border: 1px solid rgba(196,153,26,0.18);
+  box-shadow:
+    0 2px 0 0 var(--gold),        /* gold bottom accent line */
+    0 8px 48px rgba(0,0,0,0.10),
+    inset 0 0 0 5px rgba(196,153,26,0.05);
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(20px) scale(0.97);
+  transition: opacity 0.9s ease 0.3s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s;
+  overflow: hidden;
+}
+
+/* Gold top bar on frame */
+.about__frame::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), rgba(196,153,26,0.3));
+}
+
+/* Corner accents on frame */
+.about__frame::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; right: -1px;
+  width: 22px; height: 22px;
+  border-right: 3px solid var(--gold);
+  border-bottom: 3px solid var(--gold);
+}
+
+/* Shine sweep */
+.about__frame-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(255,255,255,0.5) 50%,
+    transparent 70%
+  );
+  transform: translateX(-130%) skewX(-12deg);
+  animation: frame-shine 6s ease-in-out infinite;
+  z-index: 3;
+  pointer-events: none;
+}
+@keyframes frame-shine {
+  0%   { transform: translateX(-130%) skewX(-12deg); }
+  25%  { transform: translateX(160%)  skewX(-12deg); }
+  100% { transform: translateX(160%)  skewX(-12deg); }
 }
 
 .about__image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   display: block;
+  position: relative;
+  z-index: 2;
   transition: transform 8s ease;
 }
+.about__image--zoomed { transform: scale(1.03); }
 
-.about__image--zoomed {
-  transform: scale(1.04);
-}
-
-/* Floating badge */
+/* ── Badge — bottom centre of panel ── */
 .about__badge {
   position: absolute;
-  bottom: 48px;
-  right: -24px;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  opacity: 0;
+  transition: opacity 0.8s ease 0.75s, transform 0.8s ease 0.75s;
+  z-index: 4;
+}
+.about__image-wrap--in .about__badge {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.about__badge-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   background: var(--gold);
-  padding: 28px 32px;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25);
-  z-index: 2;
-  min-width: 180px;
+  padding: 18px 28px;
+  box-shadow:
+    0 4px 24px rgba(196,153,26,0.4),
+    0 1px 0 rgba(255,255,255,0.15) inset;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer on badge */
+.about__badge-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255,255,255,0.18) 50%,
+    transparent 65%
+  );
+  animation: badge-shimmer 3.5s ease-in-out infinite;
+}
+@keyframes badge-shimmer {
+  0%   { transform: translateX(-120%); }
+  50%  { transform: translateX(120%); }
+  100% { transform: translateX(120%); }
 }
 
 .about__badge-val {
   font-family: var(--font-display);
-  font-size: clamp(40px, 5vw, 56px);
+  font-size: clamp(36px, 5vw, 52px);
   font-weight: 700;
   color: #fff;
   line-height: 1;
+  letter-spacing: -1px;
+}
+.about__badge-plus {
+  font-size: 0.65em;
+  vertical-align: super;
+  letter-spacing: 0;
+}
+
+.about__badge-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255,255,255,0.3);
+  flex-shrink: 0;
 }
 
 .about__badge-label {
   font-family: var(--font-body);
   font-size: 9px;
   font-weight: 700;
-  letter-spacing: 3px;
-  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 2.5px;
+  color: rgba(255,255,255,0.9);
   text-transform: uppercase;
-  margin-top: 6px;
+  line-height: 1.6;
 }
 
-/* Right content panel */
+/* ── Right content panel ── */
 .about__content {
   padding: clamp(48px, 8%, 100px) clamp(24px, 7%, 80px);
   display: flex;
@@ -75,7 +204,6 @@
   color: var(--ink);
   transition: opacity 0.8s 0.2s, transform 0.8s 0.2s;
 }
-
 .about__heading em {
   color: var(--gold);
   font-style: italic;
@@ -89,10 +217,7 @@
   line-height: 1.85;
   margin-top: 24px;
 }
-
-.about__body strong {
-  color: var(--ink);
-}
+.about__body strong { color: var(--ink); }
 
 .about__body-2 {
   font-family: var(--font-body);
@@ -109,20 +234,17 @@
   gap: 10px;
   margin-top: 28px;
 }
-
 .about__diff-card {
   padding: 16px 18px;
   background: var(--sand2);
   border-left: 3px solid var(--gold);
 }
-
 .about__diff-title {
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 700;
   color: var(--ink);
 }
-
 .about__diff-sub {
   font-family: var(--font-body);
   font-size: 11px;
@@ -130,22 +252,7 @@
   margin-top: 3px;
 }
 
-.about__cta {
-  margin-top: 32px;
-}
-
-/* Fade/slide animation helpers (applied via inline style) */
-.about__animate {
-  transition: opacity 0.8s, transform 0.8s;
-}
-.about__animate--hidden {
-  opacity: 0;
-  transform: translateY(24px);
-}
-.about__animate--visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.about__cta { margin-top: 32px; }
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
@@ -154,13 +261,17 @@
     min-height: auto;
   }
   .about__image-wrap {
-    min-height: 360px;
-  }
-  .about__badge {
-    right: 24px;
-    bottom: 24px;
+    min-height: 400px;
+    padding-bottom: 110px;
   }
   .about__diff-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .about__badge-inner {
+    padding: 14px 20px;
+    gap: 12px;
   }
 }
