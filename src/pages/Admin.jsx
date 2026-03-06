@@ -262,6 +262,67 @@ function ProductRow({ product, index, onEdit, onDelete, onMoveUp, onMoveDown, is
   );
 }
 
+function InquiriesTab() {
+  const [inquiries, setInquiries] = useState([]);
+  const [loading, setLoading]     = useState(true);
+
+  const fetchInquiries = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/inquiries');
+      setInquiries(await res.json());
+    } catch(e) {}
+    finally { setLoading(false); }
+  };
+
+  useEffect(()=>{ fetchInquiries(); },[]);
+
+  const updateStatus = async (id, status) => {
+    await fetch('/api/inquiries/' + id + '/status', { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({status}) });
+    setInquiries(prev => prev.map(i => i.id===id ? {...i, status} : i));
+  };
+
+  const deleteInquiry = async (id) => {
+    await fetch('/api/inquiries/' + id, { method:'DELETE' });
+    setInquiries(prev => prev.filter(i => i.id!==id));
+  };
+
+  const statusColor = (s) => s==='new'?'#c4991a':s==='contacted'?'#4ade80':'rgba(255,255,255,0.3)';
+
+  if (loading) return <div className="admin__loading"><div className="admin__spinner"/><span>Loading…</span></div>;
+  if (!inquiries.length) return <div className="admin__empty"><span className="admin__empty-icon">📬</span><p>No inquiries yet.</p></div>;
+
+  return (
+    <div className="inq-list">
+      {inquiries.map(inq=>(
+        <div className="inq-card" key={inq.id}>
+          <div className="inq-card__top">
+            <div className="inq-card__info">
+              <span className="inq-card__name">{inq.name}</span>
+              <a href={'tel:'+inq.phone} className="inq-card__phone">{inq.phone}</a>
+              {inq.email&&<a href={'mailto:'+inq.email} className="inq-card__email">{inq.email}</a>}
+            </div>
+            <span className="inq-card__status" style={{color:statusColor(inq.status)}}>{inq.status}</span>
+          </div>
+          <div className="inq-card__details">
+            {inq.material&&<span className="inq-card__chip">📦 {inq.material}</span>}
+            {inq.county&&<span className="inq-card__chip">📍 {inq.county}</span>}
+            {inq.message&&<p className="inq-card__msg">{inq.message}</p>}
+          </div>
+          <div className="inq-card__time">{new Date(inq.created_at).toLocaleString('en-KE')}</div>
+          <div className="inq-card__actions">
+            <a href={'tel:'+inq.phone} className="inq-btn inq-btn--call">📞 Call</a>
+            <a href={'https://wa.me/'+inq.phone.replace(/\D/g,'')} target="_blank" rel="noreferrer" className="inq-btn inq-btn--wa">💬 WhatsApp</a>
+            {inq.status==='new'&&<button className="inq-btn inq-btn--done" onClick={()=>updateStatus(inq.id,'contacted')}>✓ Mark Contacted</button>}
+            {inq.status==='contacted'&&<button className="inq-btn inq-btn--done" onClick={()=>updateStatus(inq.id,'done')}>✓ Mark Done</button>}
+            <button className="inq-btn inq-btn--del" onClick={()=>deleteInquiry(inq.id)}>🗑 Delete</button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Admin() {
   const [products, setProducts] = useState([]);
   const [loading,  setLoading]  = useState(true);
@@ -269,6 +330,7 @@ export default function Admin() {
   const [panel,    setPanel]    = useState(null);
   const [toast,    setToast]    = useState(null);
   const [filter,   setFilter]   = useState("All");
+  const [tab, setTab] = useState("products");
 
   const showToast = (msg,type="ok") => { setToast({msg,type}); setTimeout(()=>setToast(null),3200); };
 
@@ -321,34 +383,39 @@ export default function Admin() {
       </header>
 
       <main className="admin__main">
-        <div className="admin__title-bar">
-          <div>
-            <h1 className="admin__title">Product Catalogue</h1>
-            <p className="admin__subtitle">{loading?"Loading…":`${products.length} product${products.length!==1?"s":""}`}</p>
+        <div className="admin__tabs">
+          <button className={`admin__tab${tab==="products"?" admin__tab--active":""}`} onClick={()=>setTab("products")}>📦 Products</button>
+          <button className={`admin__tab${tab==="inquiries"?" admin__tab--active":""}`} onClick={()=>setTab("inquiries")}>📬 Inquiries</button>
+        </div>
+        {tab==="inquiries" ? <InquiriesTab /> : <>
+          <div className="admin__title-bar">
+            <div>
+              <h1 className="admin__title">Product Catalogue</h1>
+              <p className="admin__subtitle">{loading?"Loading…":`${products.length} product${products.length!==1?"s":""}`}</p>
+            </div>
+            <button className="admin__add-btn" onClick={()=>setPanel({mode:"add"})}><PlusIcon/> Add Product</button>
           </div>
-          <button className="admin__add-btn" onClick={()=>setPanel({mode:"add"})}><PlusIcon/> Add Product</button>
-        </div>
 
-        {/* Section filter tabs */}
-        <div className="admin__filter-tabs">
-          {["All",...SECTIONS].map(s=>(
-            <button key={s} className={`admin__filter-tab${filter===s?" admin__filter-tab--active":""}`} onClick={()=>setFilter(s)}>
-              {s}
-              <span className="admin__filter-count">
-                {s==="All"?products.length:products.filter(p=>p.section===s).length}
-              </span>
-            </button>
-          ))}
-        </div>
+          <div className="admin__filter-tabs">
+            {["All",...SECTIONS].map(s=>(
+              <button key={s} className={`admin__filter-tab${filter===s?" admin__filter-tab--active":""}`} onClick={()=>setFilter(s)}>
+                {s}
+                <span className="admin__filter-count">
+                  {s==="All"?products.length:products.filter(p=>p.section===s).length}
+                </span>
+              </button>
+            ))}
+          </div>
 
-        {error&&<div className="admin__error"><strong>Could not connect.</strong> {error} <button onClick={fetchProducts}>Retry</button></div>}
+          {error&&<div className="admin__error"><strong>Could not connect.</strong> {error} <button onClick={fetchProducts}>Retry</button></div>}
 
-        {loading?<div className="admin__loading"><div className="admin__spinner"/><span>Loading…</span></div>
-        :filtered.length===0&&!error?<div className="admin__empty"><span className="admin__empty-icon">📦</span><p>No products in this section yet.</p></div>
-        :<div className="admin__list">{filtered.map((p,i)=>{
-          const realIndex = products.indexOf(p);
-          return <ProductRow key={p.id} product={p} index={realIndex} isFirst={realIndex===0} isLast={realIndex===products.length-1} onEdit={()=>setPanel({mode:"edit",index:realIndex})} onDelete={()=>handleDelete(realIndex)} onMoveUp={()=>handleMove(realIndex,-1)} onMoveDown={()=>handleMove(realIndex,1)}/>;
-        })}</div>}
+          {loading?<div className="admin__loading"><div className="admin__spinner"/><span>Loading…</span></div>
+          :filtered.length===0&&!error?<div className="admin__empty"><span className="admin__empty-icon">📦</span><p>No products in this section yet.</p></div>
+          :<div className="admin__list">{filtered.map((p,i)=>{
+            const realIndex = products.indexOf(p);
+            return <ProductRow key={p.id} product={p} index={realIndex} isFirst={realIndex===0} isLast={realIndex===products.length-1} onEdit={()=>setPanel({mode:"edit",index:realIndex})} onDelete={()=>handleDelete(realIndex)} onMoveUp={()=>handleMove(realIndex,-1)} onMoveDown={()=>handleMove(realIndex,1)}/>;
+          })}</div>}
+        </>}
       </main>
 
       {panel&&(

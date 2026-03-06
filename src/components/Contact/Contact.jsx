@@ -156,8 +156,8 @@ export default function Contact() {
                 </select>
                 <input className="fi" placeholder="Delivery County *" required value={form.county} onChange={set("county")} />
                 <textarea className="fi fi--full" placeholder="Project details, quantities, timeline..." rows={4} style={{ resize: "vertical" }} value={form.msg} onChange={set("msg")} />
-                <button type="submit" className="btn-ink contact__submit">
-                  Submit Quote Request
+                <button type="submit" className="btn-ink contact__submit" disabled={submitting}>
+                  {submitting ? "Sending…" : "Submit Quote Request"}
                 </button>
                 <p className="contact__form-note">
                   Free consultation · No obligation · Response within 2 hours

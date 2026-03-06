@@ -99,3 +99,39 @@ app.delete("/api/products/:id", async (req, res) => {
 });
 
 module.exports = app;
+
+// ── Inquiries ──────────────────────────────────────────
+app.get("/api/inquiries", async (req, res) => {
+  try {
+    const { rows } = await pool.query("SELECT * FROM inquiries ORDER BY created_at DESC");
+    res.json(rows);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post("/api/inquiries", async (req, res) => {
+  const { name, phone, email, material, county, message } = req.body;
+  if (!name || !phone) return res.status(400).json({ error: "Name and phone required" });
+  try {
+    const { rows } = await pool.query(
+      `INSERT INTO inquiries (name, phone, email, material, county, message)
+       VALUES ($1,$2,$3,$4,$5,$6) RETURNING *`,
+      [name, phone||null, email||null, material||null, county||null, message||null]
+    );
+    res.status(201).json(rows[0]);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.put("/api/inquiries/:id/status", async (req, res) => {
+  const { status } = req.body;
+  try {
+    await pool.query("UPDATE inquiries SET status=$1 WHERE id=$2", [status, req.params.id]);
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete("/api/inquiries/:id", async (req, res) => {
+  try {
+    await pool.query("DELETE FROM inquiries WHERE id=$1", [req.params.id]);
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
