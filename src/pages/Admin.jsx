@@ -374,8 +374,8 @@ function InquiriesTab() {
                 <div className="inq-card__strip" style={{ background: meta.dot }}/>
                 <div className="inq-card__body">
 
-                  {/* LEFT — avatar + contact */}
-                  <div className="inq-card__left">
+                  {/* ROW 1 — avatar + name/contact + status pill */}
+                  <div className="inq-card__top">
                     <div className="inq-card__avatar">{initials}</div>
                     <div className="inq-card__contact">
                       <span className="inq-card__name">{inq.name}</span>
@@ -388,54 +388,52 @@ function InquiriesTab() {
                         </a>
                       )}
                     </div>
-                  </div>
-
-                  {/* CENTER — inquiry details */}
-                  <div className="inq-card__center">
-                    <div className="inq-card__chips">
-                      {inq.material && (
-                        <span className="inq-card__chip"><BoxIcon/>{inq.material}</span>
-                      )}
-                      {inq.county && (
-                        <span className="inq-card__chip"><PinIcon/>{inq.county}</span>
-                      )}
-                    </div>
-                    {inq.message && (
-                      <p className="inq-card__message">"{inq.message}"</p>
-                    )}
-                    <span className="inq-card__time">
-                      <ClockIcon/>
-                      {new Date(inq.created_at).toLocaleString('en-KE', { dateStyle: 'medium', timeStyle: 'short' })}
-                    </span>
-                  </div>
-
-                  {/* RIGHT — status + actions */}
-                  <div className="inq-card__right">
                     <span className="inq-card__status-pill" style={{ background: meta.bg, border: `1px solid ${meta.border}`, color: meta.dot }}>
                       <span className="inq-card__status-dot" style={{ background: meta.dot }}/>
                       {meta.label}
                     </span>
-                    <div className="inq-card__actions">
-                      <a href={`tel:${inq.phone}`} className="inq-act inq-act--call">
-                        <PhoneIcon/> Call
-                      </a>
-                      <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noreferrer" className="inq-act inq-act--wa">
-                        <WAIcon/> WhatsApp
-                      </a>
-                      {inq.status === 'new' && (
-                        <button className="inq-act inq-act--progress" onClick={() => updateStatus(inq.id, 'contacted')}>
-                          <CheckIcon/> Contacted
-                        </button>
-                      )}
-                      {inq.status === 'contacted' && (
-                        <button className="inq-act inq-act--done" onClick={() => updateStatus(inq.id, 'done')}>
-                          <CheckIcon/> Mark Done
-                        </button>
-                      )}
-                      <button className="inq-act inq-act--del" onClick={() => deleteInquiry(inq.id)} title="Delete">
-                        <TrashIcon/>
-                      </button>
+                  </div>
+
+                  {/* ROW 2 — chips */}
+                  {(inq.material || inq.county) && (
+                    <div className="inq-card__chips">
+                      {inq.material && <span className="inq-card__chip"><BoxIcon/>{inq.material}</span>}
+                      {inq.county   && <span className="inq-card__chip"><PinIcon/>{inq.county}</span>}
                     </div>
+                  )}
+
+                  {/* ROW 3 — message */}
+                  {inq.message && (
+                    <p className="inq-card__message">"{inq.message}"</p>
+                  )}
+
+                  {/* ROW 4 — time */}
+                  <span className="inq-card__time">
+                    <ClockIcon/>
+                    {new Date(inq.created_at).toLocaleString('en-KE', { dateStyle: 'medium', timeStyle: 'short' })}
+                  </span>
+
+                  {/* ROW 5 — actions */}
+                  <div className="inq-card__actions">
+                    <a href={`tel:${inq.phone}`} className="inq-act inq-act--call">
+                      <PhoneIcon/> Call
+                    </a>
+                    <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noreferrer" className="inq-act inq-act--wa">
+                      <WAIcon/> WhatsApp
+                    </a>
+                    {inq.status === 'new' && (
+                      <button className="inq-act inq-act--progress" onClick={() => updateStatus(inq.id, 'contacted')}>
+                        <CheckIcon/> Contacted
+                      </button>
+                    )}
+                    {inq.status === 'contacted' && (
+                      <button className="inq-act inq-act--done" onClick={() => updateStatus(inq.id, 'done')}>
+                        <CheckIcon/> Mark Done
+                      </button>
+                    )}
+                    <button className="inq-act inq-act--del" onClick={() => deleteInquiry(inq.id)} title="Delete">
+                      <TrashIcon/>
+                    </button>
                   </div>
 
                 </div>
