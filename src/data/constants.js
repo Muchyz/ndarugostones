@@ -158,4 +158,4 @@ export const TESTIMONIALS = [
 ];
 
 export const wa = (msg) =>
-  `https://wa.me/254713788322?text=${encodeURIComponent(msg)}`;
+  `https://wa.me/254729709938?text=${encodeURIComponent(msg)}`;

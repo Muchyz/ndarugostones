@@ -75,13 +75,13 @@ export default function Navbar({ scrollTo }) {
 
           {/* Desktop right actions */}
           <div className="navbar__actions">
-            <a href="tel:+254713788322" className="navbar__phone">
+            <a href="tel:+254729709938" className="navbar__phone">
               <span className="navbar__phone-icon">
                 <FaPhone size={13} color="#C4991A" />
               </span>
               <span className="navbar__phone-text">
                 <span className="navbar__phone-label">Call us</span>
-                <span className="navbar__phone-number">+254 713 788 322</span>
+                <span className="navbar__phone-number">+254 729 709 938</span>
               </span>
             </a>
             <button className="btn-gold navbar__cta" onClick={() => go("contact")}>
@@ -134,8 +134,8 @@ export default function Navbar({ scrollTo }) {
             Request a Quote
           </button>
           <div className="mobile-menu__contacts">
-            <a href="tel:+254713788322" className="mobile-menu__contact">
-              <FaPhone size={12} /> +254 713 788 322
+            <a href="tel:+254729709938" className="mobile-menu__contact">
+              <FaPhone size={12} /> +254 729 709 938
             </a>
             <span className="mobile-menu__dot">·</span>
             <a href={wa("Hi!")} target="_blank" rel="noreferrer" className="mobile-menu__contact">
