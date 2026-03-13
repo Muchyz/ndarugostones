@@ -30,7 +30,7 @@ const COMPANY_LINKS = [
 ];
 
 const CONTACT_ITEMS = [
-  { icon: <FaPhone size={13} />,        val: "+254 713 788 322" },
+  { icon: <FaPhone size={13} />,        val: "+254729709938" },
   { icon: <FaEnvelope size={13} />,     val: "Desmondchegeh50@gmail.com" },
   { icon: <FaMapMarkerAlt size={13} />, val: "Nairobi, Kenya" },
   { icon: <FaTruck size={13} />,        val: "All 47 Counties" },
@@ -39,7 +39,7 @@ const CONTACT_ITEMS = [
 const SOCIALS = [
   { icon: <FaFacebookF size={14} />, href: "https://www.facebook.com/Njoho001",                                    label: "Facebook",    active: true },
   { icon: <FaInstagram size={14} />, href: "https://www.instagram.com/peterndarugomawe?igsh=NjZ0YnN6b2NocTc=",    label: "Instagram",   active: true },
-  { icon: <FaWhatsapp  size={14} />, href: "https://wa.me/254713788322",                                         label: "WhatsApp",    active: true },
+  { icon: <FaWhatsapp  size={14} />, href: "https://wa.me/254729709938",                                         label: "WhatsApp",    active: true },
   { icon: <FaTiktok    size={14} />, href: "https://www.tiktok.com/@buildersforum1?_r=1&_t=ZS-94Lg9bMZkQS",    label: "TikTok",      active: true },
   { icon: <FaTwitter   size={14} />, href: null,                                                                    label: "Twitter / X", active: false },
 ];
