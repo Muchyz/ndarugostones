@@ -36,15 +36,6 @@ function Home() {
       </main>
       <ChatWidget scrollTo={scrollTo} />
       <Footer scrollTo={scrollTo} />
-      <a
-        className="wa-fab"
-        href={wa("Hi, I'd like a quote for building materials.")}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Chat on WhatsApp"
-      >
-        <FaWhatsapp size={26} color="#fff" />
-      </a>
       <div className="mob-cta">
         <a href="tel:+254729709938" className="mob-call" aria-label="Call us">
           <span>📞</span> CALL
