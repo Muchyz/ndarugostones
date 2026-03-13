@@ -14,7 +14,7 @@ const GREEN = "#22C55E";
 // ── Knowledge base ─────────────────────────────────
 const KB = {
   products: [
-    { name: "Machine-Cut Ndarugo Stones", sizes: ["6×9", "9×9"], prices: { Kiambu: { "6×9": "KSh 45", "9×9": "KSh 55" }, Nairobi: { "6×9": "KSh 55", "9×9": "KSh 65" }, Nyeri: { "6×9": "KSh 55", "9×9": "KSh 80" }, Mombasa: { "6×9": "KSh 80", "9×9": "KSh 120" } } },
+    { name: "Machine-Cut Favoured K. Suppliers", sizes: ["6×9", "9×9"], prices: { Kiambu: { "6×9": "KSh 45", "9×9": "KSh 55" }, Nairobi: { "6×9": "KSh 55", "9×9": "KSh 65" }, Nyeri: { "6×9": "KSh 55", "9×9": "KSh 80" }, Mombasa: { "6×9": "KSh 80", "9×9": "KSh 120" } } },
     { name: "Bulk Ballast", sizes: ["Single load (5 tons)", "Double load (10 tons)"], prices: { Kiambu: { "Single": "KSh 4,500", "Double": "KSh 8,500" }, Nairobi: { "Single": "KSh 5,500", "Double": "KSh 10,000" } } },
     { name: "River Sand", sizes: ["Single load", "Double load"], prices: { Kiambu: { "Single": "KSh 3,500", "Double": "KSh 6,500" }, Nairobi: { "Single": "KSh 4,500", "Double": "KSh 8,000" } } },
     { name: "Quarry Dust", sizes: ["Single load"], prices: { Kiambu: { "Single": "KSh 2,800" }, Nairobi: { "Single": "KSh 3,500" } } },
@@ -32,7 +32,7 @@ const KB = {
 // ── Menu tree ──────────────────────────────────────
 const MENU = {
   root: {
-    msg: "👋 Hello! Welcome to **Ndarugo Stones**.\n\nI'm here to help. What would you like to know?",
+    msg: "👋 Hello! Welcome to **Favoured K. Suppliers**.\n\nI'm here to help. What would you like to know?",
     options: [
       { label: "🪨 Products & Prices",    next: "products" },
       { label: "🚚 Delivery & Counties",  next: "delivery" },
@@ -44,7 +44,7 @@ const MENU = {
   products: {
     msg: "We supply the following materials. Which would you like pricing for?",
     options: [
-      { label: "🪨 Ndarugo Stones",   next: "stones" },
+      { label: "🪨 Favoured K. Suppliers",   next: "stones" },
       { label: "🪵 Bulk Ballast",     next: "ballast" },
       { label: "🏖️ River Sand",       next: "sand" },
       { label: "⬛ Quarry Dust",      next: "dust" },
@@ -53,7 +53,7 @@ const MENU = {
     ],
   },
   stones: {
-    msg: `**Machine-Cut Ndarugo Stones**\n\nAvailable sizes: **6×9** and **9×9**\n\n📍 *Prices per 1,000 stones:*\n\n• **Kiambu** — 6×9: KSh 45 · 9×9: KSh 55\n• **Nairobi** — 6×9: KSh 55 · 9×9: KSh 65\n• **Nyeri** — 6×9: KSh 55 · 9×9: KSh 80\n• **Mombasa** — 6×9: KSh 80 · 9×9: KSh 120\n\n💬 Need a custom county quote?`,
+    msg: `**Machine-Cut Favoured K. Suppliers**\n\nAvailable sizes: **6×9** and **9×9**\n\n📍 *Prices per 1,000 stones:*\n\n• **Kiambu** — 6×9: KSh 45 · 9×9: KSh 55\n• **Nairobi** — 6×9: KSh 55 · 9×9: KSh 65\n• **Nyeri** — 6×9: KSh 55 · 9×9: KSh 80\n• **Mombasa** — 6×9: KSh 80 · 9×9: KSh 120\n\n💬 Need a custom county quote?`,
     options: [
       { label: "📋 Request a Quote",  next: "quote_prompt" },
       { label: "← Back to Products", next: "products" },
@@ -134,7 +134,7 @@ const MENU = {
   wa_order: {
     msg: `Great! You'll be taken to WhatsApp. A message template will be pre-filled — just add your details and send. 👇`,
     options: [
-      { label: "💬 Open WhatsApp", next: "wa_go", external: `https://wa.me/254729709938?text=${encodeURIComponent("Hi Ndarugo Stones! 👋\n\nI'd like to place an order:\n\n📦 Material: \n📍 County: \n🔢 Quantity: \n📱 My name: ")}` },
+      { label: "💬 Open WhatsApp", next: "wa_go", external: `https://wa.me/254729709938?text=${encodeURIComponent("Hi Favoured K. Suppliers! 👋\n\nI'd like to place an order:\n\n📦 Material: \n📍 County: \n🔢 Quantity: \n📱 My name: ")}` },
       { label: "🏠 Main Menu",     next: "root" },
     ],
   },
@@ -418,7 +418,7 @@ export default function ChatWidget({ scrollTo }) {
               fontSize: 16,
             }}>🪨</div>
             <div>
-              <div style={{ color: "#fff", fontSize: 13, fontWeight: 700 }}>Ndarugo Stones</div>
+              <div style={{ color: "#fff", fontSize: 13, fontWeight: 700 }}>Favoured K. Suppliers</div>
               <div style={{ color: GOLD, fontSize: 10, letterSpacing: "1.5px" }}>
                 <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: GREEN, marginRight: 4 }} />
                 ONLINE · Typically replies instantly
@@ -456,7 +456,7 @@ export default function ChatWidget({ scrollTo }) {
             borderTop: `1px solid ${SAND}`,
             display: "flex", justifyContent: "space-between", alignItems: "center",
           }}>
-            <span style={{ fontSize: 10, color: "#aaa" }}>Ndarugo Stones Support</span>
+            <span style={{ fontSize: 10, color: "#aaa" }}>Favoured K. Suppliers</span>
             <a
               href={`https://wa.me/254729709938`}
               target="_blank" rel="noreferrer"
