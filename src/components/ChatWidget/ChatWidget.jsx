@@ -10,7 +10,7 @@ function buildProductMsg(product) {
   if (!product) return "Product info unavailable. Please call us for pricing.";
   let msg = `**${product.title}**\n`;
   if (product.description) msg += `\n${product.description}\n`;
-  const prices = typeof product.city_prices === "string" ? JSON.parse(product.city_prices || "{}") : (product.city_prices || {});
+  let prices = {}; try { prices = typeof product.city_prices === "string" ? JSON.parse(product.city_prices) : product.city_prices; prices = prices || {}; } catch(e) { prices = {}; }
   if (prices && Object.keys(prices).length > 0) {
     msg += `\n📍 *Prices by county:*\n`;
     for (const [city, variants] of Object.entries(prices)) {
