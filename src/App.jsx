@@ -44,7 +44,7 @@ function Home() {
         <FaWhatsapp size={26} color="#fff" />
       </a>
       <div className="mob-cta">
-        <a href="tel:+254713788322" className="mob-call" aria-label="Call us">
+        <a href="tel:+254729709938" className="mob-call" aria-label="Call us">
           <span>📞</span> CALL
         </a>
         <a
