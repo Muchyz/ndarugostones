@@ -348,7 +348,7 @@ export default function ChatWidget({ scrollTo }) {
       `}</style>
 
       {/* Floating button */}
-      <div style={{ position: "fixed", bottom: 24, left: 24, zIndex: 9999 }}>
+      <div style={{ position: "fixed", bottom: 80, right: 24, zIndex: 9999 }}>
         {!open && (
           <div style={{
             position: "absolute", bottom: "110%", left: 0,
@@ -395,7 +395,7 @@ export default function ChatWidget({ scrollTo }) {
       {/* Chat window */}
       {open && (
         <div style={{
-          position: "fixed", bottom: 88, left: 24, zIndex: 9998,
+          position: "fixed", bottom: 144, right: 24, zIndex: 9998,
           width: 320, maxHeight: 520,
           background: "#fff",
           borderRadius: 16,
