@@ -59,7 +59,7 @@ export default function Navbar({ scrollTo }) {
               </div>
               <div className="navbar__logo-sub"
                 style={{ color: menuOpen ? "rgba(255,255,255,0.4)" : "#7A7570" }}>
-                Ndarugo Stones
+                SUPPLIERS
               </div>
             </div>
           </button>
