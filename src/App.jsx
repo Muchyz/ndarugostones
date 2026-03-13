@@ -14,6 +14,7 @@ import Footer       from "./components/Footer/Footer";
 import Admin        from "./pages/Admin";
 import { wa }       from "./data/constants";
 import { FaWhatsapp } from "react-icons/fa";
+import ChatWidget from "./components/ChatWidget/ChatWidget";
 
 const scrollTo = (id) =>
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -33,6 +34,7 @@ function Home() {
         <Cta          scrollTo={scrollTo} />
         <Contact />
       </main>
+      <ChatWidget scrollTo={scrollTo} />
       <Footer scrollTo={scrollTo} />
       <a
         className="wa-fab"
