@@ -351,7 +351,7 @@ export default function ChatWidget({ scrollTo }) {
       <div style={{ position: "fixed", bottom: 80, right: 24, zIndex: 9999 }}>
         {!open && (
           <div style={{
-            position: "absolute", bottom: "110%", left: 0,
+            position: "absolute", bottom: "110%", right: 0,
             background: INK, color: "#fff",
             padding: "8px 12px", borderRadius: 8, fontSize: 12,
             whiteSpace: "nowrap", marginBottom: 4,
