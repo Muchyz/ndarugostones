@@ -31,8 +31,8 @@ const COMPANY_LINKS = [
 
 const CONTACT_ITEMS = [
   { icon: <FaPhone size={13} />,        val: "+254729709938" },
-  { icon: <FaEnvelope size={13} />,     val: "Desmondchegeh50@gmail.com" },
-  { icon: <FaMapMarkerAlt size={13} />, val: "Nairobi, Kenya" },
+  { icon: <FaEnvelope size={13} />,     val: "favouredk33@gmail.com" },
+  { icon: <FaMapMarkerAlt size={13} />, val: "Juja, Kiambu" },
   { icon: <FaTruck size={13} />,        val: "All 47 Counties" },
 ];
 
