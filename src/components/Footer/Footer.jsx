@@ -31,7 +31,7 @@ const COMPANY_LINKS = [
 
 const CONTACT_ITEMS = [
   { icon: <FaPhone size={13} />,        val: "+254729709938" },
-  { icon: <FaEnvelope size={13} />,     val: "favouredk33@gmail.com" },
+  { icon: <FaEnvelope size={13} />,     val: "Favouredksuppliers@gmail.com" },
   { icon: <FaMapMarkerAlt size={13} />, val: "Juja, Kiambu" },
   { icon: <FaTruck size={13} />,        val: "All 47 Counties" },
 ];
@@ -154,7 +154,7 @@ export default function Footer({ scrollTo }) {
         {/* Bottom bar */}
         <div className="footer__bottom">
           <span className="footer__copyright">
-            © {new Date().getFullYear()} Favoured K. Ndarugo Stones. All rights reserved.
+            © {new Date().getFullYear()} Favoured K. Suppliers. All rights reserved.
           </span>
           <span className="footer__location">
             Nairobi, Kenya · Countrywide Delivery

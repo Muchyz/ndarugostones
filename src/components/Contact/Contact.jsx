@@ -13,7 +13,7 @@ import { wa } from "../../data/constants";
 
 const INFO_ITEMS = [
   { icon: <FaPhone size={16} />,        label: "Phone & WhatsApp", val: "0729709938",           href: "tel:0729709938" },
-  { icon: <FaEnvelope size={16} />,     label: "Email",            val: "Desmondchegeh50@gmail.com",  href: "mailto:Desmondchegeh50@gmail.com" },
+  { icon: <FaEnvelope size={16} />,     label: "Email",            val: "Favouredksuppliers@gmail.com",  href: "mailto:Favouredksuppliers@gmail.com" },
   { icon: <FaMapMarkerAlt size={16} />, label: "Head Office",      val: "Juja, Kiambu County, Kenya", href: "https://www.google.com/maps/search/Juja+Ndarugo+Stones+Kiambu+Kenya" },
   { icon: <FaClock size={16} />,        label: "Business Hours",   val: "Mon–Sat: 6am – 8pm",         href: "#" },
   { icon: <FaTruck size={16} />,        label: "Delivery",         val: "All 47 Counties, Nationwide", href: "#" },
