@@ -77,7 +77,7 @@
   transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
 
-/* Brand colours — always visible (double class for specificity) */
+/* Brand colours — always visible */
 .footer__social-icon.footer__social-icon--facebook  { color: #1877F2 !important; border-color: #1877F2; }
 .footer__social-icon.footer__social-icon--instagram { color: #E1306C !important; border-color: #E1306C; }
 .footer__social-icon.footer__social-icon--whatsapp  { color: #25D366 !important; border-color: #25D366; }
@@ -185,8 +185,16 @@
   padding-top: 24px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.footer__bottom-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
 }
 
 .footer__copyright,
@@ -194,6 +202,23 @@
   font-family: var(--font-body);
   font-size: 11px;
   color: rgba(255, 255, 255, 0.2);
+}
+
+.footer__built-by {
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.15);
+}
+
+.footer__agency-link {
+  color: var(--gold);
+  opacity: 0.6;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.footer__agency-link:hover {
+  opacity: 1;
 }
 
 /* ── Responsive ── */
@@ -207,5 +232,9 @@
   .footer__grid {
     grid-template-columns: 1fr;
     gap: 32px;
+  }
+
+  .footer__bottom-right {
+    align-items: flex-start;
   }
 }

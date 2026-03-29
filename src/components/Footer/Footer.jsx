@@ -37,14 +37,13 @@ const CONTACT_ITEMS = [
 ];
 
 const SOCIALS = [
-  { icon: <FaFacebookF size={14} />, href: "https://www.facebook.com/Njoho001",                                    label: "Facebook",    active: true },
-  { icon: <FaInstagram size={14} />, href: "https://www.instagram.com/peterndarugomawe?igsh=NjZ0YnN6b2NocTc=",    label: "Instagram",   active: true },
-  { icon: <FaWhatsapp  size={14} />, href: "https://wa.me/254729709938",                                         label: "WhatsApp",    active: true },
-  { icon: <FaTiktok    size={14} />, href: "https://www.tiktok.com/@buildersforum1?_r=1&_t=ZS-94Lg9bMZkQS",    label: "TikTok",      active: true },
-  { icon: <FaTwitter   size={14} />, href: null,                                                                    label: "Twitter / X", active: false },
+  { icon: <FaFacebookF size={14} />, href: "https://www.facebook.com/Njoho001",                                 label: "Facebook",    active: true },
+  { icon: <FaInstagram size={14} />, href: "https://www.instagram.com/peterndarugomawe?igsh=NjZ0YnN6b2NocTc=", label: "Instagram",   active: true },
+  { icon: <FaWhatsapp  size={14} />, href: "https://wa.me/254729709938",                                        label: "WhatsApp",    active: true },
+  { icon: <FaTiktok    size={14} />, href: "https://www.tiktok.com/@buildersforum1?_r=1&_t=ZS-94Lg9bMZkQS",   label: "TikTok",      active: true },
+  { icon: <FaTwitter   size={14} />, href: null,                                                                 label: "Twitter / X", active: false },
 ];
 
-// Logo mark
 function FooterLogoMark() {
   return (
     <svg width="34" height="34" viewBox="0 0 36 36">
@@ -156,9 +155,22 @@ export default function Footer({ scrollTo }) {
           <span className="footer__copyright">
             © {new Date().getFullYear()} Favoured K. Suppliers. All rights reserved.
           </span>
-          <span className="footer__location">
-            Nairobi, Kenya · Countrywide Delivery
-          </span>
+          <div className="footer__bottom-right">
+            <span className="footer__location">
+              Nairobi, Kenya · Countrywide Delivery
+            </span>
+            <span className="footer__built-by">
+              Built by{" "}
+              <a
+                href="https://www.muchyz.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="footer__agency-link"
+              >
+                Muchyz Digital Agency
+              </a>
+            </span>
+          </div>
         </div>
       </div>
     </footer>
