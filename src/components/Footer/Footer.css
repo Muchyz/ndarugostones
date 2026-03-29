@@ -77,21 +77,18 @@
   transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
 
-/* Brand colours — always visible */
 .footer__social-icon.footer__social-icon--facebook  { color: #1877F2 !important; border-color: #1877F2; }
 .footer__social-icon.footer__social-icon--instagram { color: #E1306C !important; border-color: #E1306C; }
 .footer__social-icon.footer__social-icon--whatsapp  { color: #25D366 !important; border-color: #25D366; }
 .footer__social-icon.footer__social-icon--tiktok    { color: #EE1D52 !important; border-color: #EE1D52; }
 .footer__social-icon.footer__social-icon--twitter   { color: #1DA1F2 !important; border-color: #1DA1F2; }
 
-/* Brighten on hover */
 .footer__social-icon.footer__social-icon--facebook:hover  { background: rgba(24,119,242,0.12); }
 .footer__social-icon.footer__social-icon--instagram:hover { background: rgba(225,48,108,0.12); }
 .footer__social-icon.footer__social-icon--whatsapp:hover  { background: rgba(37,211,102,0.12); }
 .footer__social-icon.footer__social-icon--tiktok:hover    { background: rgba(238,29,82,0.12);  }
 .footer__social-icon.footer__social-icon--twitter:hover   { background: rgba(29,161,242,0.12); }
 
-/* Disabled / coming-soon icons */
 .footer__social-icon--disabled {
   opacity: 0.25;
   cursor: not-allowed;
@@ -183,7 +180,7 @@
 .footer__bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.07);
   padding-top: 24px;
-  padding-bottom: 80px; /* clears the fixed CALL/WhatsApp bar on mobile */
+  padding-bottom: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -230,6 +227,6 @@
   .footer__bottom {
     flex-direction: column;
     align-items: flex-start;
-    padding-bottom: 90px; /* extra breathing room on small screens */
+    padding-bottom: 90px;
   }
 }

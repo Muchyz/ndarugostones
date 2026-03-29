@@ -21,27 +21,52 @@ const SERVICES_LIST = [
 ];
 
 const COMPANY_LINKS = [
-  { id: "home",     label: "Home" },
+  { id: "home", label: "Home" },
   { id: "services", label: "Services" },
-  { id: "about",    label: "About Us" },
-  { id: "process",  label: "Our Process" },
-  { id: "gallery",  label: "Gallery" },
-  { id: "contact",  label: "Contact" },
+  { id: "about", label: "About Us" },
+  { id: "process", label: "Our Process" },
+  { id: "gallery", label: "Gallery" },
+  { id: "contact", label: "Contact" },
 ];
 
 const CONTACT_ITEMS = [
-  { icon: <FaPhone size={13} />,        val: "+254729709938" },
-  { icon: <FaEnvelope size={13} />,     val: "Favouredksuppliers@gmail.com" },
+  { icon: <FaPhone size={13} />, val: "+254729709938" },
+  { icon: <FaEnvelope size={13} />, val: "Favouredksuppliers@gmail.com" },
   { icon: <FaMapMarkerAlt size={13} />, val: "Juja, Kiambu" },
-  { icon: <FaTruck size={13} />,        val: "All 47 Counties" },
+  { icon: <FaTruck size={13} />, val: "All 47 Counties" },
 ];
 
 const SOCIALS = [
-  { icon: <FaFacebookF size={14} />, href: "https://www.facebook.com/Njoho001",                                 label: "Facebook",    active: true },
-  { icon: <FaInstagram size={14} />, href: "https://www.instagram.com/peterndarugomawe?igsh=NjZ0YnN6b2NocTc=", label: "Instagram",   active: true },
-  { icon: <FaWhatsapp  size={14} />, href: "https://wa.me/254729709938",                                        label: "WhatsApp",    active: true },
-  { icon: <FaTiktok    size={14} />, href: "https://www.tiktok.com/@buildersforum1?_r=1&_t=ZS-94Lg9bMZkQS",   label: "TikTok",      active: true },
-  { icon: <FaTwitter   size={14} />, href: null,                                                                 label: "Twitter / X", active: false },
+  {
+    icon: <FaFacebookF size={14} />,
+    href: "https://www.facebook.com/Njoho001",
+    label: "Facebook",
+    active: true,
+  },
+  {
+    icon: <FaInstagram size={14} />,
+    href: "https://www.instagram.com/peterndarugomawe?igsh=NjZ0YnN6b2NocTc=",
+    label: "Instagram",
+    active: true,
+  },
+  {
+    icon: <FaWhatsapp size={14} />,
+    href: "https://wa.me/254729709938",
+    label: "WhatsApp",
+    active: true,
+  },
+  {
+    icon: <FaTiktok size={14} />,
+    href: "https://www.tiktok.com/@buildersforum1?_r=1&_t=ZS-94Lg9bMZkQS",
+    label: "TikTok",
+    active: true,
+  },
+  {
+    icon: <FaTwitter size={14} />,
+    href: null,
+    label: "Twitter / X",
+    active: false,
+  },
 ];
 
 function FooterLogoMark() {
@@ -79,4 +104,95 @@ export default function Footer({ scrollTo }) {
 
             {/* Social icons */}
             <div className="footer__socials">
-              {SOCIALS.map(({ icon, href, label,
+              {SOCIALS.map(({ icon, href, label, active }) =>
+                active ? (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={label}
+                    className="footer__social-icon"
+                  >
+                    {icon}
+                  </a>
+                ) : (
+                  <span
+                    key={label}
+                    aria-label={label}
+                    className="footer__social-icon footer__social-icon--disabled"
+                    title="Coming soon"
+                  >
+                    {icon}
+                  </span>
+                )
+              )}
+            </div>
+          </div>
+
+          {/* Services */}
+          <div>
+            <div className="footer__col-title">Services</div>
+            {SERVICES_LIST.map((s) => (
+              <button
+                key={s}
+                className="footer__link"
+                onClick={() => scrollTo("services")}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+
+          {/* Company */}
+          <div>
+            <div className="footer__col-title">Company</div>
+            {COMPANY_LINKS.map(({ id, label }) => (
+              <button
+                key={id}
+                className="footer__link"
+                onClick={() => scrollTo(id)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          {/* Contact */}
+          <div>
+            <div className="footer__col-title">Contact</div>
+            {CONTACT_ITEMS.map(({ icon, val }) => (
+              <div key={val} className="footer__contact-item">
+                <span className="footer__contact-icon">{icon}</span>
+                <span className="footer__contact-val">{val}</span>
+              </div>
+            ))}
+            <div className="footer__hours">
+              <div className="footer__hours-label">Hours</div>
+              <div className="footer__hours-main">Mon–Sat: 6am – 8pm</div>
+              <div className="footer__hours-note">Sunday: On-call only</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="footer__bottom">
+          <span className="footer__copyright">
+            © {new Date().getFullYear()} Favoured K. Suppliers. All rights reserved.
+          </span>
+          <span className="footer__built-by">
+            Built & designed by{" "}
+            <a
+              href="https://www.muchyz.com/"
+              target="_blank"
+              rel="noreferrer"
+              className="footer__agency-link"
+            >
+              Muchyz Digital Agency
+            </a>
+          </span>
+        </div>
+      </div>
+    </footer>
+  );
+}
